@@ -8,6 +8,6 @@ Installation:
 - `tsd install`
 - `npm install`
 - `ES_URL=http://demo.searchkit.co/api npm start`
-- visit http://localhost:3000 or http://localhost:3000/demo/demo1
+- visit http://localhost:3000
 
 Also installation of Elastic Search 2.x(for now, later 5.x) is recommended although this code currently runs search against searchkits demo API.

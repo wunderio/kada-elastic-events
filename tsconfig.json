@@ -22,6 +22,8 @@
     "./src/app/test/unit/AppSpec.tsx",
     "./src/demo/demo1.tsx",
     "./src/demo/demo2.tsx",
+    "./src/demo/kadasearch.tsx",
+    "./src/kadasearch/kadasearch.tsx",
     "./src/demo/HitItems.tsx",
     "./src/index.tsx",
     "./src/app/index.ts",
