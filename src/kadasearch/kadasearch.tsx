@@ -24,18 +24,16 @@ import {
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
-
+// Hacky config loading, we need a module or something.
+var Config = require('../../kada-config.js');
+var SearchServer = Config.elasticSearchServer;
 export class KadaSearch extends React.Component<any, any> {
-
   searchkit:SearchkitManager
 
   constructor() {
     super()
     // new searchkit Manager connecting to ES server
-    //    const host = "http://demo.searchkit.co/api/movies"
-    //const host = "http://dt-demo.turku.fi:9200/events" 
-    const host = "http://localhost:9200/events" 
-   // const host = "/api/movies"
+    const host = SearchServer;
     this.searchkit = new SearchkitManager(host)
   }
 
