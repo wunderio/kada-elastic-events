@@ -14,9 +14,5 @@ ReactDOM.render((
     <Route component={KadaSearch} path="/"/>
     <Route component={KadaSearch} path="kadasearch"/>
     <Route component={App} path="imdb"/>
-    <Route component={TaxonomyApp} path="taxonomy"/>
-    <Route component={CrimeApp} path="crime"/>
-
-    <Route component={ListApp} path="list-app"/>
   </Router>
 ), document.getElementById('root'));
