@@ -7,7 +7,9 @@ Installation:
 	- `npm install tsd -g`
 - `tsd install`
 - `npm install`
-- `ES_URL=http://demo.searchkit.co/api npm start`
-- visit http://localhost:3000
+- `cp kada-config.example.js kada-config.js`
+  - `Edit the kada-config.js file, enter your Elasticsearch server url(and port if necessary)
+- `npm start`
+- visit http://localhost:3000 (This is current default, will change later).
 
-Also installation of Elastic Search 2.x(for now, later 5.x) is recommended although this code currently runs search against searchkits demo API.
+Also installation of Elastic Search 2.x(for now, later 5.x) is recommended if using the Kadasearch-Drupal module for indexing(not published yet).

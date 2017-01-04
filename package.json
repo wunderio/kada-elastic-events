@@ -1,7 +1,7 @@
 {
-  "name": "searchkit-demo",
+  "name": "Kadasearch",
   "version": "1.0.0",
-  "description": "searchkit poc",
+  "description": "Search UI for elastic events for KADA-project",
   "main": "index.js",
   "scripts": {
     "start": "node start.js",
