@@ -8,7 +8,7 @@ Installation:
 - `tsd install`
 - `npm install`
 - `cp kada-config.example.js kada-config.js`
-  - `Edit the kada-config.js file, enter your Elasticsearch server url(and port if necessary)
+  - Edit the kada-config.js file, enter your Elasticsearch server url(and port if necessary)
 - `npm start`
 - visit http://localhost:3000 (This is current default, will change later).
 
