@@ -32,8 +32,10 @@ export class KadaSearch extends React.Component<any, any> {
   constructor() {
     super()
     // new searchkit Manager connecting to ES server
-    const host = "http://demo.searchkit.co/api/movies"
-    // const host = "/api/movies"
+    //    const host = "http://demo.searchkit.co/api/movies"
+    //const host = "http://dt-demo.turku.fi:9200/events" 
+    const host = "http://localhost:9200/events" 
+   // const host = "/api/movies"
     this.searchkit = new SearchkitManager(host)
   }
 
@@ -50,7 +52,7 @@ export class KadaSearch extends React.Component<any, any> {
             <SearchBox
               autofocus={true}
               searchOnChange={true}
-              queryFields={["title^5", "actors"]}
+              queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
               />
           </TopBar>
 
@@ -66,9 +68,9 @@ export class KadaSearch extends React.Component<any, any> {
               />
 
               <RefinementListFilter
-                id="actors"
-                title="Actors"
-                field="actors.raw"
+                id="target_audience"
+                title="Target Audience"
+                field="field_target_audience"
                 operator="OR"
                 size={10}
                 listComponent={ItemHistogramList}
@@ -95,6 +97,7 @@ export class KadaSearch extends React.Component<any, any> {
 
               <ActionBar>
                 <ActionBarRow>
+
           				<HitsStats/>
           			</ActionBarRow>
                 <ActionBarRow>
@@ -104,12 +107,12 @@ export class KadaSearch extends React.Component<any, any> {
               </ActionBar>
 
               <Hits
+
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
                 hitsPerPage={15}
-                highlightFields={["title"]}/>
-              <NoHits suggestionsField="title"/>
-
+                highlightFields={["title_field.original"]}/>
+              <NoHits suggestionsField="title_field.original"/>
       			</LayoutResults>
           </LayoutBody>
 
