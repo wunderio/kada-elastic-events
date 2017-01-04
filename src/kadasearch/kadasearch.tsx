@@ -24,7 +24,7 @@ import {
 } from "searchkit";
 
 import "searchkit/theming/theme.scss";
-// Hacky config loading, we need a module or something.
+// Hackish config loading, we need a module or something.
 var Config = require('../../kada-config.js');
 var SearchServer = Config.elasticSearchServer;
 export class KadaSearch extends React.Component<any, any> {
