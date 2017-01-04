@@ -61,18 +61,6 @@ module.exports = {
       origin:"*",
       maxAge:20*24*60*60 //20 days like elastic
     }))
-    app.use("/api/movies", SearchkitExpress.createRouter({
-      host, index:"movies"
-    }))
-
-    app.use("/api/crimes", SearchkitExpress.createRouter({
-      host, index:"crimes"
-    }))
-
-    app.use("/api/taxonomy", SearchkitExpress.createRouter({
-      host, index:"taxonomynested"
-    }))
-
 
     app.get('*', function(req, res) {
       res.render('index');
