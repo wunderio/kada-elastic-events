@@ -22,6 +22,7 @@ module.exports = {
   resolveLoader: {
     root: path.join(__dirname, "node_modules")
   },
+//  devtool: 'eval-source-map',
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),

@@ -22,11 +22,17 @@ import {
   SideBar, TopBar,
   ActionBar, ActionBarRow
 } from "searchkit";
-
 import "searchkit/theming/theme.scss";
-// Hackish config loading, we need a module or something.
-var Config = require('../../kada-config.js');
-var SearchServer = Config.elasticSearchServer;
+
+// Exclude Drupal-object so the build does not crash but we can still use it when available.
+declare var Drupal: any;
+
+//  Hackish config loading, we need a module or something.
+//  var Config = require('../../kada-config.js');
+
+// .. Except that we can retrieve settings from Drupal. Nice!
+var SearchServer = Drupal.settings.elasticServer;
+//console.log(drupaltesti, 'config');
 export class KadaSearch extends React.Component<any, any> {
   searchkit:SearchkitManager
 
@@ -35,6 +41,7 @@ export class KadaSearch extends React.Component<any, any> {
     // new searchkit Manager connecting to ES server
     const host = SearchServer;
     this.searchkit = new SearchkitManager(host)
+    //console.log('react loads');
   }
 
 
@@ -68,7 +75,16 @@ export class KadaSearch extends React.Component<any, any> {
               <RefinementListFilter
                 id="target_audience"
                 title="Target Audience"
-                field="field_target_audience"
+                field="field_target_audience.original"
+                operator="OR"
+                size={10}
+                listComponent={ItemHistogramList}
+              />
+
+              <RefinementListFilter
+                id="title"
+                title="Title"
+                field="title_field.original"
                 operator="OR"
                 size={10}
                 listComponent={ItemHistogramList}
@@ -86,8 +102,6 @@ export class KadaSearch extends React.Component<any, any> {
                 fields={["type.raw", "genres.raw"]}
                 title="Categories"
                 id="categories"/>
-
-
 
             </SideBar>
 

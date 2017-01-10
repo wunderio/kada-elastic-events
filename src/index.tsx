@@ -12,7 +12,8 @@ const createBrowserHistory = require('history/lib/createBrowserHistory')
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
     <Route component={KadaSearch} path="/"/>
-    <Route component={KadaSearch} path="kadasearch"/>
-    <Route component={App} path="imdb"/>
+    <Route component={KadaSearch} path="*"/>
+     <Route component={KadaSearch} path="kadasearch"/>
+     <Route component={App} path="imdb"/>
   </Router>
-), document.getElementById('root'));
+), document.getElementById('kada-event-search'));
