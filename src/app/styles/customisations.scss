@@ -47,3 +47,18 @@
 .layout__crime-app {
 
 }
+
+.sk-layout__body {
+  min-width: auto !important;
+}
+
+
+@media (min-width: 0px) and (max-width: 767px) {
+  .sk-layout__body {
+    flex-direction: column;
+  }
+
+  .sk-layout__filters {
+    margin-right: 15px !important;
+  }
+}

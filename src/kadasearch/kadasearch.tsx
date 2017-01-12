@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
 import {MovieHitsGridItem} from "./HitItems.tsx";
+import DrupalSettings from "../DrupalSettings.tsx";
 
 import {
   SearchBox,
@@ -22,17 +23,13 @@ import {
   SideBar, TopBar,
   ActionBar, ActionBarRow
 } from "searchkit";
+
+import "./styles/customisations.scss";
 import "searchkit/theming/theme.scss";
+import "./styles/responsive.scss";
 
-// Exclude Drupal-object so the build does not crash but we can still use it when available.
-declare var Drupal: any;
+var SearchServer = DrupalSettings.settings.elasticServer;
 
-//  Hackish config loading, we need a module or something.
-//  var Config = require('../../kada-config.js');
-
-// .. Except that we can retrieve settings from Drupal. Nice!
-var SearchServer = Drupal.settings.elasticServer;
-//console.log(drupaltesti, 'config');
 export class KadaSearch extends React.Component<any, any> {
   searchkit:SearchkitManager
 
@@ -41,9 +38,7 @@ export class KadaSearch extends React.Component<any, any> {
     // new searchkit Manager connecting to ES server
     const host = SearchServer;
     this.searchkit = new SearchkitManager(host)
-    //console.log('react loads');
   }
-
 
   render(){
 
@@ -52,8 +47,8 @@ export class KadaSearch extends React.Component<any, any> {
         <Layout size="l">
 
           <TopBar>
-          <div className="my-logo">Kada Event calendar</div>
-          
+            <div className="my-logo">Kada Event calendar! 😎</div>
+
             <SearchBox
               autofocus={true}
               searchOnChange={true}

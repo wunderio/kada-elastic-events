@@ -5,9 +5,16 @@ import {TaxonomyApp} from "./app/src/TaxonomyApp.tsx";
 import {CrimeApp} from "./app/src/crime/CrimeApp.tsx";
 import {KadaSearch} from "./kadasearch/kadasearch.tsx";
 import {ListApp} from "./app/src/list-app/ListApp.tsx";
+import DrupalSettings from "./DrupalSettings.tsx";
 
 import {Router, Route, IndexRoute} from "react-router";
 const createBrowserHistory = require('history/lib/createBrowserHistory')
+
+let rootElemId = 'kada-event-search';
+
+if (DrupalSettings.settings.noDrupal) {
+  rootElemId = 'root';
+}
 
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
@@ -16,4 +23,4 @@ ReactDOM.render((
      <Route component={KadaSearch} path="kadasearch"/>
      <Route component={App} path="imdb"/>
   </Router>
-), document.getElementById('kada-event-search'));
+), document.getElementById(rootElemId));
