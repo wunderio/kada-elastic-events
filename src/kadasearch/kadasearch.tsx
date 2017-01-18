@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {MovieHitsGridItem} from "./HitItems.tsx";
+import { EventListItem } from "./HitItems.tsx";
 import DrupalSettings from "../DrupalSettings.tsx";
 
 import {
@@ -88,7 +88,7 @@ export class KadaSearch extends React.Component<any, any> {
               </ActionBar>
 
               <Hits
-                itemComponent={MovieHitsGridItem}
+                itemComponent={EventListItem}
                 mod="sk-hits-grid"
                 hitsPerPage={15}
                 highlightFields={["title_field.original"]}/>

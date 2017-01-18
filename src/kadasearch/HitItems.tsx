@@ -1,11 +1,10 @@
 import * as _ from "lodash";
 import * as React from "react";
 
-const MovieHitsGridItem = (props)=> {
-  const {bemBlocks, result} = props
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
-  const source:any = _.extend({}, result._source, result.highlight)
-console.log(result);
+const EventGridItem = (props) => {
+  const {bemBlocks, result} = props;
+  let url = "http://www.imdb.com/title/" + result._source.imdbId;
+  const source: any = _.extend({}, result._source, result.highlight);
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
@@ -14,25 +13,28 @@ console.log(result);
         </div>
       </a>
     </div>
-  )
-}
+  );
+};
 
-const MovieHitsListItem = (props)=> {
-  const {bemBlocks, result} = props
-  let url = "http://www.imdb.com/title/" + result._source.imdbId
-  const source:any = _.extend({}, result._source, result.highlight)
+const EventListItem = (props) => {
+  const {bemBlocks, result} = props;
+  const source: any = _.extend({}, result._source, result.highlight);
+  let image = (source.field_content_image_et_url) ? (
+    <div className="event__image__wrapper">
+      <img src={source.field_content_image_et_url} width="231" height="231" alt="" />
+    </div>
+  ) : null;
   return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <div className={bemBlocks.item("poster")}>
-        <img data-qa="poster" src={result._source.poster}/>
-      </div>
-      <div className={bemBlocks.item("details")}>
-        <a href={url} target="_blank"><h2 className={bemBlocks.item("title_field.original")} dangerouslySetInnerHTML={{__html:source.title}}></h2></a>
-        <h3 className={bemBlocks.item("subtitle")}>Released in {source.year}, rated {source.imdbRating}/10</h3>
-        <div className={bemBlocks.item("text")} dangerouslySetInnerHTML={{__html:source.plot}}></div>
+    <div className="event event--list">
+      {image}
+      <div className="event__content__wrapper">
+        <h2 className="event__title">
+          <a href="/#">{source.title_field.original}</a>
+        </h2>
+        <div className="event__leading" dangerouslySetInnerHTML={{__html:source.field_lead_paragraph_et.original}}></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {MovieHitsGridItem, MovieHitsListItem}
+export { EventGridItem, EventListItem }
