@@ -20,51 +20,34 @@ import {
   ItemHistogramList,
   TagCloud,
   Layout, LayoutBody, LayoutResults,
-  SideBar, TopBar,
+  SideBar,
   ActionBar, ActionBarRow
 } from "searchkit";
 
-import "./styles/customisations.scss";
-import "searchkit/theming/theme.scss";
-import "./styles/responsive.scss";
+import "./styles/theme.scss";
 
-var SearchServer = DrupalSettings.settings.elasticServer;
+let SearchServer = DrupalSettings.settings.elasticServer;
 
 export class KadaSearch extends React.Component<any, any> {
-  searchkit:SearchkitManager
+  searchkit: SearchkitManager;
 
   constructor() {
-    super()
+    super();
     // new searchkit Manager connecting to ES server
     const host = SearchServer;
-    this.searchkit = new SearchkitManager(host)
+    this.searchkit = new SearchkitManager(host);
   }
 
-  render(){
-
+  render() {
     return (
       <SearchkitProvider searchkit={this.searchkit}>
         <Layout size="l">
-
-          <TopBar>
-            <div className="my-logo">Kada Event calendar! 😎</div>
-
-            <SearchBox
-              autofocus={true}
-              searchOnChange={true}
-              queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
-              />
-          </TopBar>
-
           <LayoutBody>
-
             <SideBar>
-              <RangeFilter
-                min={0}
-                max={100}
-                field="metaScore"
-                id="metascore"
-                title="Metascore"
+              <SearchBox
+                autofocus={false}
+                searchOnChange={true}
+                queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
               />
 
               <RefinementListFilter
@@ -85,14 +68,6 @@ export class KadaSearch extends React.Component<any, any> {
                 listComponent={ItemHistogramList}
               />
 
-              <RefinementListFilter
-                id="writers"
-                title="Writers"
-                field="writers.raw"
-                operator="OR"
-                size={10}
-              />
-
               <HierarchicalMenuFilter
                 fields={["type.raw", "genres.raw"]}
                 title="Categories"
@@ -100,31 +75,31 @@ export class KadaSearch extends React.Component<any, any> {
 
             </SideBar>
 
-      			<LayoutResults>
+            <LayoutResults>
 
               <ActionBar>
-                <ActionBarRow>
-
-          				<HitsStats/>
-          			</ActionBarRow>
                 <ActionBarRow>
                   <SelectedFilters/>
                   <ResetFilters/>
                 </ActionBarRow>
+                <ActionBarRow>
+                  <HitsStats/>
+                </ActionBarRow>
               </ActionBar>
 
               <Hits
-
                 itemComponent={MovieHitsGridItem}
                 mod="sk-hits-grid"
                 hitsPerPage={15}
                 highlightFields={["title_field.original"]}/>
+
               <NoHits suggestionsField="title_field.original"/>
-      			</LayoutResults>
+
+            </LayoutResults>
           </LayoutBody>
 
-    		</Layout>
+        </Layout>
       </SearchkitProvider>
-	)}
-
+    );
+  }
 }
