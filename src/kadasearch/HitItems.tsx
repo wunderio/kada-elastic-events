@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import * as React from "react";
+import Drupal from "../DrupalSettings.tsx";
 
 const EventGridItem = (props) => {
   const {bemBlocks, result} = props;
@@ -24,15 +25,24 @@ const EventListItem = (props) => {
       <img src={source.field_content_image_et_url} width="231" height="231" alt="" />
     </div>
   ) : null;
-  return (
+  let title = (source.title_field) ? source.title_field.original : null;
+  let leading = (source.field_lead_paragraph_et) ? source.field_lead_paragraph_et.original : null;
+  let isRenderable = (title !== null);
+  return (isRenderable) ? (
     <div className="event event--list">
       {image}
       <div className="event__content__wrapper">
         <h2 className="event__title">
-          <a href="/#">{source.title_field.original}</a>
+          <a href="/#" dangerouslySetInnerHTML={{__html:title}}></a>
         </h2>
-        <div className="event__leading" dangerouslySetInnerHTML={{__html:source.field_lead_paragraph_et.original}}></div>
+        <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
       </div>
+    </div>
+  )
+  :
+  (
+    <div className="event event--list">
+      <i>{ Drupal.t('We were unable to display event id @id. Sorry!', { "@id": result._id }) }</i>
     </div>
   );
 };

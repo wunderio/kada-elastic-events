@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
 import { EventListItem } from "./HitItems.tsx";
-import DrupalSettings from "../DrupalSettings.tsx";
+import Drupal from "../DrupalSettings.tsx";
 
 import {
   SearchBox,
@@ -26,7 +26,7 @@ import {
 
 import "./styles/theme.scss";
 
-let SearchServer = DrupalSettings.settings.elasticServer;
+let SearchServer = Drupal.settings.elasticServer;
 
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
