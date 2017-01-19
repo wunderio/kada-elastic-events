@@ -3,6 +3,7 @@
 // Exclude Drupal-object so the build does not crash but we can still use it
 // when available.
 declare var Drupal: any;
+declare var window;
 let DrupalSettings: any;
 
 // from Drupal.

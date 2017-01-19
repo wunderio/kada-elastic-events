@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
   devtool:"eval",
@@ -17,10 +16,6 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new WebpackShellPlugin({
-      onBuildStart: [],
-      onBuildEnd: ['npm run extract-translations']
-    }),
   ],
   resolve: {
     alias: {

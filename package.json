@@ -9,8 +9,7 @@
     "test_old": "karma start --single-run",
     "test:watch": "./node_modules/.bin/karma start karma.conf.js --auto-watch",
     "build": "rm -rf dist && NODE_ENV=production node ./node_modules/webpack/bin/webpack -p --config ./webpack.prod.config.js --progress --profile --colors",
-    "test:e2e": "rm -rf test/e2e/generated; tsc -p test/e2e; protractor test/e2e/config/protractor.conf.js",
-    "extract-translations": "grep -hr Drupal\\.t\\( ./src > ./dist/strings.txt"
+    "test:e2e": "rm -rf test/e2e/generated; tsc -p test/e2e; protractor test/e2e/config/protractor.conf.js"
   },
   "author": "",
   "license": "MIT",
@@ -23,7 +22,7 @@
     "ejs": "^2.3.4",
     "elasticsearch": "^10.0.1",
     "express": "^4.13.3",
-    "history": "1.13.1",
+    "history": "1.17.0",
     "lodash": "^4.2.0",
     "method-override": "^2.3.5",
     "normalize.css": "^3.0.3",
@@ -67,7 +66,6 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.12.1",
     "webpack-hot-middleware": "^2.5.0",
-    "webpack-shell-plugin": "^0.5.0",
     "xenon": "ten-eleven/xenon"
   }
 }

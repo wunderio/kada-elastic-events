@@ -1,1 +1,0 @@
-      <i>{ Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>

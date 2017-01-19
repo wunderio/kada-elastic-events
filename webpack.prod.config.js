@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
   entry: [
@@ -30,7 +29,10 @@ module.exports = {
     new ExtractTextPlugin("styles.css", {allChunks:true}),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
-        except: ['require', 'export', '$super']
+        except: ['exports', 'require', '$super', 'Drupal', 'DrupalSettings']
+      },
+      output: {
+        comments: false,
       },
       compress: {
         warnings: false,
@@ -43,10 +45,6 @@ module.exports = {
         join_vars: true,
         drop_console: true
       }
-    }),
-    new WebpackShellPlugin({
-      onBuildStart: [],
-      onBuildEnd: ['npm run extract-translations']
     }),
   ],
   module: {

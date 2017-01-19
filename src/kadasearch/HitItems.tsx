@@ -2,6 +2,8 @@ import * as _ from "lodash";
 import * as React from "react";
 import Drupal from "../DrupalSettings.tsx";
 
+declare var window;
+
 const EventGridItem = (props) => {
   const {bemBlocks, result} = props;
   let url = "http://www.imdb.com/title/" + result._source.imdbId;
@@ -42,7 +44,7 @@ const EventListItem = (props) => {
   :
   (
     <div className="event event--list">
-      <i>{ Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>
+      <i>{ window.Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>
     </div>
   );
 };
