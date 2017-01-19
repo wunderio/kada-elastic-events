@@ -9,7 +9,8 @@
     "test_old": "karma start --single-run",
     "test:watch": "./node_modules/.bin/karma start karma.conf.js --auto-watch",
     "build": "rm -rf dist && NODE_ENV=production node ./node_modules/webpack/bin/webpack -p --config ./webpack.prod.config.js --progress --profile --colors",
-    "test:e2e": "rm -rf test/e2e/generated; tsc -p test/e2e; protractor test/e2e/config/protractor.conf.js"
+    "test:e2e": "rm -rf test/e2e/generated; tsc -p test/e2e; protractor test/e2e/config/protractor.conf.js",
+    "extract-translations": "grep -hr Drupal\\.t\\( ./src > ./dist/strings.txt"
   },
   "author": "",
   "license": "MIT",
@@ -66,6 +67,7 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.12.1",
     "webpack-hot-middleware": "^2.5.0",
+    "webpack-shell-plugin": "^0.5.0",
     "xenon": "ten-eleven/xenon"
   }
 }

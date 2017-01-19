@@ -42,7 +42,7 @@ const EventListItem = (props) => {
   :
   (
     <div className="event event--list">
-      <i>{ Drupal.t('We were unable to display event id @id. Sorry!', { "@id": result._id }) }</i>
+      <i>{ Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>
     </div>
   );
 };

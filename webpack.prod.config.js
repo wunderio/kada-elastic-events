@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
   entry: [
@@ -42,7 +43,11 @@ module.exports = {
         join_vars: true,
         drop_console: true
       }
-    })
+    }),
+    new WebpackShellPlugin({
+      onBuildStart: [],
+      onBuildEnd: ['npm run extract-translations']
+    }),
   ],
   module: {
     loaders: [
