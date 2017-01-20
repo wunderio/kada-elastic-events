@@ -1,0 +1,22 @@
+@mixin breakpoint($min, $max: null) {
+  $min: get-breakpoint($min);
+  @if ($max) {
+    $max: get-breakpoint($max);
+    @media screen and (min-width: $min) and (max-width: $max - 1px) {
+      @content;
+    }
+  }
+  @else {
+    @media screen and (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+@function get-breakpoint($name) {
+  @if map-has-key($breakpoints, $name) {
+    @return map-get($breakpoints, $name);
+  }
+  @warn "Breakpoint `#{$name}` is not defined!";
+  @return null;
+}

@@ -143,4 +143,18 @@ $sk-border-radius: 0;
 
 // Custom variables.
 $sk-button-background: $turkucalendar-lightgray;
+$sk-item-background: $turkucalendar-lightergray;
 $sk-placeholder-color: $turkucalendar-mediumgray;
+
+// Breakpoints.
+
+$breakpoints: (
+  'mobile': 0px,
+  'phablet': 321px,
+  'tablet': 551px,
+  'small-desk': 769px,
+  'mobi-navi': 946px,
+  'desk': 1138px,
+  'large-desk': 1320px,
+  'huge-desk': 1620px,
+);

@@ -19,14 +19,20 @@ import {
   SearchkitManager,
   NoHits,
   RangeFilter,
+  Pagination,
   ItemHistogramList,
+  ViewSwitcherHits,
   TagCloud,
   Layout, LayoutBody, LayoutResults,
   SideBar,
+  Panel,
   ActionBar, ActionBarRow
 } from "searchkit";
 
 import "./styles/theme.scss";
+
+const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);
+const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
 
 let SearchServer = Drupal.settings.elasticServer;
 
@@ -75,8 +81,9 @@ export class KadaSearch extends React.Component<any, any> {
                 id="target_audience"
                 title={window.Drupal.t("Target audience")}
                 field="field_target_audience.original"
-                operator="OR"
+                operator="AND"
                 size={10}
+                containerComponent={CollapsablePanel}
                 listComponent={ItemHistogramList}
               />
 
@@ -84,8 +91,9 @@ export class KadaSearch extends React.Component<any, any> {
                 id="title"
                 title={window.Drupal.t("Title")}
                 field="title_field.original"
-                operator="OR"
-                size={10}
+                operator="AND"
+                size={5}
+                containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
 
@@ -108,13 +116,19 @@ export class KadaSearch extends React.Component<any, any> {
                 </ActionBarRow>
               </ActionBar>
 
+              <Pagination showNumbers={true}/>
+
               <Hits
                 itemComponent={EventListItem}
                 mod="sk-hits-grid"
-                hitsPerPage={15}
-                highlightFields={["title_field.original"]}/>
+                hitsPerPage={10}
+                highlightFields={["title_field.original"]}
+                scrollTo=".sk-layout"
+              />
 
               <NoHits suggestionsField="title_field.original"/>
+
+              <Pagination showNumbers={true}/>
 
             </LayoutResults>
           </LayoutBody>
