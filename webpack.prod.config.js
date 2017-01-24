@@ -51,8 +51,8 @@ module.exports = {
     loaders: [
       {
         test: /\.(tsx|ts|jsx|js)$/,
-        loaders: ['react-hot', 'ts'],
-        include: path.join(__dirname, 'src')
+        loaders: ['react-hot', 'babel', 'ts'],
+        include: path.join(__dirname, 'src'),
       },
       {
         test: /\.(scss|css)$/,
