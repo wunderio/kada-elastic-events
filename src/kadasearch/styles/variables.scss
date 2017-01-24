@@ -126,9 +126,9 @@ $sk-disabled-text-color: lighten($body-font-color, 52%);
 // $sk-remove-action-color: #fa2a00 !default;
 
 // $sk-selector-background: white !default;
-// $sk-selector-active-background: #08c !default;
-// $sk-selector-border-color: #ccc !default;
-// $sk-selector-text-color: black !default;
+$sk-selector-active-background: $turkucalendar-red;
+$sk-selector-border-color: #ccc !default;
+$sk-selector-text-color: $body-font-color;
 // $sk-selector-active-text-color: white !default;
 
 $sk-selected-filters-background: $turkucalendar-lightgray;

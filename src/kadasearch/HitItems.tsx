@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { extend } from "lodash";
 import * as React from "react";
 import Drupal from "../DrupalSettings.tsx";
 
@@ -7,7 +7,7 @@ declare var window;
 const EventGridItem = (props) => {
   const {bemBlocks, result} = props;
   let url = "http://www.imdb.com/title/" + result._source.imdbId;
-  const source: any = _.extend({}, result._source, result.highlight);
+  const source: any = extend({}, result._source, result.highlight);
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <a href={url} target="_blank">
@@ -21,7 +21,7 @@ const EventGridItem = (props) => {
 
 const EventListItem = (props) => {
   const {bemBlocks, result} = props;
-  const source: any = _.extend({}, result._source, result.highlight);
+  const source: any = extend({}, result._source, result.highlight);
 
   // If there's an url in the index, use it. Otherwise, fall back to Drupal node-id.
   let url = (source.url) ? source.url : '/node/' + result._id
@@ -37,7 +37,7 @@ const EventListItem = (props) => {
   let ticketsLink = (tickets) ? (
     <div className="event__ticket_wrapper">
       <div className="event__ticket">
-        <a href={tickets.urls} target="_blank" rel="noopener">
+        <a href={tickets.url} target="_blank" rel="noopener">
           Osta liput
         </a>
       </div>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as _ from "lodash";
 import { EventListItem } from "./HitItems.tsx";
 import Drupal from "../DrupalSettings.tsx";
 
@@ -11,7 +10,7 @@ import {
   HitsStats,
   RefinementListFilter,
   ResetFilters,
-  SelectedFilters,
+  GroupedSelectedFilters,
   HierarchicalRefinementFilter,
   SearchkitComponent,
   SearchkitProvider,
@@ -25,8 +24,6 @@ import {
   Panel,
   ActionBar, ActionBarRow
 } from "searchkit";
-
-import DateRangeFilter from './DateRangeFilter'
 
 import "./styles/theme.scss";
 
@@ -76,14 +73,11 @@ export class KadaSearch extends React.Component<any, any> {
                 queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
               />
 
-              <RangeFilter
+              <HierarchicalRefinementFilter
                 id="field_event_date"
                 title={window.Drupal.t("Event date")}
-                field="field_event_date.begin"
-                rangeComponent={ DateRangeFilter }
-                containerComponent={ CollapsablePanel }
-                min={ new Date().getTime()-(365*86400000) }
-                max={ new Date().getTime()+(365*86400000) }
+                field="field_event_date"
+                orderKey="field_event_date.order"
               />
 
               <RefinementListFilter
@@ -111,7 +105,7 @@ export class KadaSearch extends React.Component<any, any> {
 
               <ActionBar>
                 <ActionBarRow>
-                  <SelectedFilters/>
+                  <GroupedSelectedFilters/>
                   <ResetFilters/>
                 </ActionBarRow>
                 <ActionBarRow>
@@ -126,7 +120,7 @@ export class KadaSearch extends React.Component<any, any> {
                   itemComponent={EventListItem}
                   hitsPerPage={10}
                   highlightFields={["title_field.original"]}
-                  scrollTo=".sk-layout"
+                  scrollTo={false}
                 />
               </div>
 

@@ -16,6 +16,6 @@ ReactDOM.render((
   <Router history={createBrowserHistory()}>
     <Route component={KadaSearch} path="/"/>
     <Route component={KadaSearch} path="*"/>
-     <Route component={KadaSearch} path="kadasearch"/>
+    <Route component={KadaSearch} path="kadasearch"/>
   </Router>
 ), document.getElementById(rootElemId));

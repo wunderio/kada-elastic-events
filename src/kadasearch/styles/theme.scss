@@ -119,6 +119,7 @@ body {
   &.is-focused {
     background: white;
     border-bottom: 2px solid $sk-text-color;
+    margin-bottom: 18px;
   }
 
   &.is-focused &__text {
@@ -182,6 +183,10 @@ body {
     padding: 9px 10px;
     margin-bottom: 5px;
     user-select: none;
+
+    &.is-active {
+      border-left: 4px solid $sk-text-color;
+    }
   }
 }
 
@@ -206,6 +211,7 @@ body {
 .sk-hierarchical-refinement-list {
   &__header {
     background-color: $sk-button-background;
+    color: $sk-title-color;
     padding: 6px 10px;
     margin-bottom: 5px;
   }
@@ -223,6 +229,10 @@ body {
 
   &__count {
     border-radius: 0;
+  }
+
+  &.is-selected {
+    border-left: 4px solid $sk-text-color;
   }
 }
 
@@ -401,26 +411,17 @@ body {
 }
 
 .sk-action-bar {
-
   .sk-select, .sk-toggle {
     margin-left:15px;
   }
 }
 
 .sk-layout__filters {
-
   .sk-select select {
     width: 100%
   }
 }
 
-.react-datepicker__input-container {
-  display: block;
-
-  .sk-input-filter {
-    background-color: $sk-item-background;
-    padding: 9px 10px;
-    margin-bottom: 5px;
-    width: 100%;
-  }
+.sk-toggle {
+  max-height: initial;
 }
