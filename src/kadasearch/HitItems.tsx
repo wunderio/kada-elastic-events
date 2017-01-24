@@ -30,8 +30,8 @@ const EventListItem = (props) => {
       <img src={source.field_content_image_et_url} width="231" height="231" alt="" />
     </div>
   ) : null;
-  let title = (source.title_field) ? source.title_field.original : null;
-  let leading = (source.field_lead_paragraph_et) ? source.field_lead_paragraph_et.original : null;
+  let title = (source.title_field) ? source.title_field : null;
+  let leading = (source.field_lead_paragraph_et) ? source.field_lead_paragraph_et : null;
 
   let tickets = source.field_event_tickets_url_et;
   let ticketsLink = (tickets) ? (

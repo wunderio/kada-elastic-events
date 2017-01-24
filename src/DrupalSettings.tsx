@@ -1,4 +1,5 @@
 /* tslint:disable:quotemark */
+import { extend } from 'lodash'
 
 // Exclude Drupal-object so the build does not crash but we can still use it
 // when available.
@@ -23,7 +24,13 @@ let checkPlain = (str) => {
 // If developing or deploying the app separately from Drupal, the
 // Drupal object needs to be shimmed.
 if (typeof Drupal === "undefined") {
-  DrupalSettings = require("../kada-config.js");
+  DrupalSettings = {
+    settings: extend({
+      noDrupal: 'true',
+      language: 'fi',
+      currentCalendar: 'events',
+    }, require("../kada-config.js"))
+  }
   window["Drupal"] = DrupalSettings;
   // Shim for the t() function so things can be translated in Drupal.
   window["Drupal"]["t"] = (str, args) => {

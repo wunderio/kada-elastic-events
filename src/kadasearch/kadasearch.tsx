@@ -31,6 +31,10 @@ const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />)
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
 
 let SearchServer = Drupal.settings.elasticServer;
+let SearchCalendar = Drupal.settings.currentCalendar;
+let SearchLanguage = Drupal.settings.language;
+let SearchIndex = SearchCalendar + '_' + SearchLanguage;
+let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
@@ -38,7 +42,7 @@ export class KadaSearch extends React.Component<any, any> {
   constructor() {
     super();
     // new searchkit Manager connecting to ES server
-    const host = SearchServer;
+    const host = SearchServerURL;
     this.searchkit = new SearchkitManager(host);
 
     // Attach translations to Drupal
@@ -75,27 +79,27 @@ export class KadaSearch extends React.Component<any, any> {
 
               <HierarchicalRefinementFilter
                 id="field_event_date"
-                title={window.Drupal.t("Event date")}
+                title={window.Drupal.t("When")}
                 field="field_event_date"
                 orderKey="field_event_date.order"
               />
 
               <RefinementListFilter
-                id="target_audience"
-                title={window.Drupal.t("Target audience")}
-                field="field_target_audience.original"
+                id="event_types"
+                title={window.Drupal.t("What")}
+                field="field_event_types"
                 operator="AND"
-                size={10}
-                containerComponent={CollapsablePanel}
+                size={5}
+                containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
 
               <RefinementListFilter
-                id="event_types"
-                title={window.Drupal.t("Event types")}
-                field="field_event_types.original"
+                id="target_audience"
+                title={window.Drupal.t("For whom")}
+                field="field_target_audience"
                 operator="AND"
-                size={5}
+                size={10}
                 containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
