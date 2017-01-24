@@ -18,12 +18,15 @@ import {
   SearchkitManager,
   NoHits,
   Pagination,
+  RangeFilter,
   ItemHistogramList,
   Layout, LayoutBody, LayoutResults,
   SideBar,
   Panel,
   ActionBar, ActionBarRow
 } from "searchkit";
+
+import DateRangeFilter from './DateRangeFilter'
 
 import "./styles/theme.scss";
 
@@ -73,11 +76,15 @@ export class KadaSearch extends React.Component<any, any> {
                 queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
               />
 
-              <HierarchicalRefinementFilter
+              <RangeFilter
                 id="field_event_date"
                 title={window.Drupal.t("Event date")}
-                field="field_event_date"
-               />
+                field="field_event_date.begin"
+                rangeComponent={ DateRangeFilter }
+                containerComponent={ CollapsablePanel }
+                min={ new Date().getTime()-(365*86400000) }
+                max={ new Date().getTime()+(365*86400000) }
+              />
 
               <RefinementListFilter
                 id="target_audience"
@@ -114,12 +121,14 @@ export class KadaSearch extends React.Component<any, any> {
 
               <Pagination showNumbers={true}/>
 
-              <Hits
-                itemComponent={EventListItem}
-                hitsPerPage={10}
-                highlightFields={["title_field.original"]}
-                scrollTo=".sk-layout"
-              />
+              <div className="clearfix">
+                <Hits
+                  itemComponent={EventListItem}
+                  hitsPerPage={10}
+                  highlightFields={["title_field.original"]}
+                  scrollTo=".sk-layout"
+                />
+              </div>
 
               <NoHits suggestionsField="title_field.original"/>
 

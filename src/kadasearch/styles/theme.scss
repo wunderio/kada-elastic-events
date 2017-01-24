@@ -413,3 +413,14 @@ body {
     width: 100%
   }
 }
+
+.react-datepicker__input-container {
+  display: block;
+
+  .sk-input-filter {
+    background-color: $sk-item-background;
+    padding: 9px 10px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+}
