@@ -74,7 +74,7 @@ export class KadaSearch extends React.Component<any, any> {
               <SearchBox
                 autofocus={false}
                 searchOnChange={true}
-                queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
+                queryFields={["title_field", "field_lead_paragraph_et"]}
               />
 
               <HierarchicalRefinementFilter
@@ -123,12 +123,12 @@ export class KadaSearch extends React.Component<any, any> {
                 <Hits
                   itemComponent={EventListItem}
                   hitsPerPage={10}
-                  highlightFields={["title_field.original"]}
+                  highlightFields={["title_field"]}
                   scrollTo={false}
                 />
               </div>
 
-              <NoHits suggestionsField="title_field.original"/>
+              <NoHits suggestionsField="title_field"/>
 
               <Pagination showNumbers={true}/>
 

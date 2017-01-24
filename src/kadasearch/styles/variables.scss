@@ -112,7 +112,7 @@ $sk-font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
 $sk-layout-background: none;
 $sk-layout-panel-background: none;
-$sk-primary-theme-color: $turkucalendar-events;
+$sk-primary-theme-color: $turkucalendar-gray;
 $sk-active-bg-color: $body-font-color;
 $sk-border-color: $turkucalendar-gray;
 $sk-title-color: $turkucalendar-gray;
@@ -120,10 +120,10 @@ $sk-text-color: $body-font-color;
 $sk-text-secondary-color: $body-font-color;
 $sk-list-text-color: $body-font-color;
 $sk-list-secondary-text-color: $body-font-color;
-$sk-action-text-color: $turkucalendar-red;
+$sk-action-text-color: $turkucalendar-gray;
 // $sk-action-active-color: #000 !default;
 $sk-disabled-text-color: lighten($body-font-color, 52%);
-// $sk-remove-action-color: #fa2a00 !default;
+$sk-remove-action-color: $turkucalendar-red;
 
 // $sk-selector-background: white !default;
 $sk-selector-active-background: $turkucalendar-gray;
