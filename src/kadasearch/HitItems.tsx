@@ -22,6 +22,9 @@ const EventGridItem = (props) => {
 const EventListItem = (props) => {
   const {bemBlocks, result} = props;
   const source: any = _.extend({}, result._source, result.highlight);
+
+  // If there's an url in the index, use it. Otherwise, fall back to Drupal node-id.
+  let url = (source.url) ? source.url : '/node/' + result._id
   let image = (source.field_content_image_et_url) ? (
     <div className="event__image__wrapper">
       <img src={source.field_content_image_et_url} width="231" height="231" alt="" />
@@ -29,15 +32,28 @@ const EventListItem = (props) => {
   ) : null;
   let title = (source.title_field) ? source.title_field.original : null;
   let leading = (source.field_lead_paragraph_et) ? source.field_lead_paragraph_et.original : null;
+
+  let tickets = source.field_event_tickets_url_et;
+  let ticketsLink = (tickets) ? (
+    <div className="event__ticket_wrapper">
+      <div className="event__ticket">
+        <a href={tickets.urls} target="_blank" rel="noopener">
+          Osta liput
+        </a>
+      </div>
+    </div>
+  ): null;
+
   let isRenderable = (title !== null);
   return (isRenderable) ? (
     <div className="event event--list">
       {image}
       <div className="event__content__wrapper">
         <h2 className="event__title">
-          <a href="/#" dangerouslySetInnerHTML={{__html:title}}></a>
+          <a href={url} dangerouslySetInnerHTML={{__html:title}}></a>
         </h2>
         <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
+        {ticketsLink}
       </div>
     </div>
   )

@@ -12,17 +12,13 @@ import {
   RefinementListFilter,
   ResetFilters,
   SelectedFilters,
-  HierarchicalMenuFilter,
-  NumericRefinementListFilter,
+  HierarchicalRefinementFilter,
   SearchkitComponent,
   SearchkitProvider,
   SearchkitManager,
   NoHits,
-  RangeFilter,
   Pagination,
   ItemHistogramList,
-  ViewSwitcherHits,
-  TagCloud,
   Layout, LayoutBody, LayoutResults,
   SideBar,
   Panel,
@@ -77,6 +73,12 @@ export class KadaSearch extends React.Component<any, any> {
                 queryFields={["title_field.original", "field_lead_paragraph_et.original"]}
               />
 
+              <HierarchicalRefinementFilter
+                id="field_event_date"
+                title={window.Drupal.t("Event date")}
+                field="field_event_date"
+               />
+
               <RefinementListFilter
                 id="target_audience"
                 title={window.Drupal.t("Target audience")}
@@ -88,20 +90,14 @@ export class KadaSearch extends React.Component<any, any> {
               />
 
               <RefinementListFilter
-                id="title"
-                title={window.Drupal.t("Title")}
-                field="title_field.original"
+                id="event_types"
+                title={window.Drupal.t("Event types")}
+                field="field_event_types.original"
                 operator="AND"
                 size={5}
                 containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
-
-              <HierarchicalMenuFilter
-                fields={["type.raw", "genres.raw"]}
-                title="Categories"
-                id="categories"/>
-
             </SideBar>
 
             <LayoutResults>
@@ -120,7 +116,6 @@ export class KadaSearch extends React.Component<any, any> {
 
               <Hits
                 itemComponent={EventListItem}
-                mod="sk-hits-grid"
                 hitsPerPage={10}
                 highlightFields={["title_field.original"]}
                 scrollTo=".sk-layout"

@@ -13,12 +13,8 @@
     "jsx": "react"
   },
   "files": [
-    "./src/app/src/App.tsx",
-    "./src/app/src/ResultComponents.tsx",
-    "./src/app/test/unit/AppSpec.tsx",
     "./src/kadasearch/kadasearch.tsx",
     "./src/index.tsx",
-    "./src/app/index.ts",
     "./typings/tsd.d.ts"
   ],
   "filesGlob": [

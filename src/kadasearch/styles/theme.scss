@@ -181,6 +181,7 @@ body {
     background-color: $sk-item-background;
     padding: 9px 10px;
     margin-bottom: 5px;
+    user-select: none;
   }
 }
 
@@ -199,6 +200,29 @@ body {
       background-color: $sk-button-background;
       border-radius: 0;
     }
+  }
+}
+
+.sk-hierarchical-refinement-list {
+  &__header {
+    background-color: $sk-button-background;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+.sk-hierarchical-refinement-option {
+  background-color: $sk-item-background;
+  color: $sk-text-color;
+  padding: 9px 10px;
+  margin-bottom: 5px;
+  user-select: none;
+
+  &__text {
+  }
+
+  &__count {
+    border-radius: 0;
   }
 }
 
@@ -255,10 +279,6 @@ body {
 }
 
 .sk-hits-grid {
-  display:flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-
   &__no-results {
     text-align:center;
     margin-top:60px;

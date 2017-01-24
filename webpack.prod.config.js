@@ -16,7 +16,7 @@ module.exports = {
     alias: {
       react: path.resolve('./node_modules/react')
     },
-    extensions:[".js", ".ts", ".tsx","", ".webpack.js", ".web.js"],
+    extensions:["", ".js", ".ts", ".tsx", ".webpack.js", ".web.js"],
     fallback: path.join(__dirname, "node_modules")
   },
   resolveLoader: {
@@ -50,7 +50,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.tsx?$/,
+        test: /\.(tsx|ts|jsx|js)$/,
         loaders: ['react-hot', 'ts'],
         include: path.join(__dirname, 'src')
       },
