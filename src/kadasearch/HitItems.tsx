@@ -37,10 +37,55 @@ const EventListItem = (props) => {
   let title = (source.title_field) ? source.title_field : null;
   let leading = (source.field_lead_paragraph_et) ? source.field_lead_paragraph_et : null;
 
+  let dateVignette = (source.field_date_vignette) ? (
+    <div className="date__vignette">{source.field_date_vignette}</div>
+  ) : null;
+
+  let prettyDates = (source.field_event_date_pretty) ? (
+    <div className="event__date">
+      {source.field_event_date_pretty}
+      {dateVignette}
+    </div>
+  ) : null;
+
+  let trafficLight = (() => {
+    let ticketInformation = (source.field_ticket_information) ? source.field_ticket_information.split('-') : null;
+    if (ticketInformation) {
+      let totalTickets = parseInt(ticketInformation[0]);
+      let availableTickets = parseInt(ticketInformation[3]);
+      let percentage = 0;
+      let color = '';
+      let text = '';
+      let prefix = window.Drupal.t("Estimate of ticket availability: ");
+
+      // Sanity check.
+      if (totalTickets && availableTickets && totalTickets >= availableTickets) {
+        let percentage = ((availableTickets / totalTickets) * 100)
+        if (percentage <= 5) {
+          color = 'red';
+          text = window.Drupal.t('Almost sold out');
+        } else if (percentage > 5 && percentage <= 30) {
+          color = 'orange';
+          text = window.Drupal.t('Few tickets available');
+        } else {
+          color = 'green';
+          text = window.Drupal.t('Tickets available');
+        }
+
+        let className = `traffic-light-${color}`
+
+        return { className, color, text }
+      }
+    }
+  })()
+
+  let trafficLightClass = (trafficLight) ? trafficLight.className : null;
+  let trafficLightText = (trafficLight) ? trafficLight.text : null;
+
   let tickets = source.field_event_tickets_url_et;
   let ticketsLink = (tickets) ? (
     <div className="event__ticket_wrapper">
-      <div className="event__ticket">
+      <div className={['event__ticket', trafficLightClass].join(' ')} title={trafficLightText}>
         <a href={tickets.url} target="_blank" rel="noopener">
           Osta liput
         </a>
@@ -58,6 +103,7 @@ const EventListItem = (props) => {
         <h2 className="event__title">
           <a href={url} dangerouslySetInnerHTML={{__html:title}}></a>
         </h2>
+        {prettyDates}
         <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
         {ticketsLink}
       </div>
