@@ -2,6 +2,10 @@ import { extend } from "lodash";
 import * as React from "react";
 import Drupal from "../DrupalSettings.tsx";
 
+import {
+  TagFilterList
+} from "searchkit"
+
 declare var window;
 
 const EventGridItem = (props) => {
@@ -44,6 +48,8 @@ const EventListItem = (props) => {
     </div>
   ): null;
 
+  let eventTypes = (<TagFilterList field="field_event_types" values={source.field_event_types} />)
+
   let isRenderable = (title !== null);
   return (isRenderable) ? (
     <div className="event event--list">
@@ -54,6 +60,11 @@ const EventListItem = (props) => {
         </h2>
         <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
         {ticketsLink}
+      </div>
+      <div className="event__information__wrapper">
+        <div className="event__types">
+          {eventTypes}
+        </div>
       </div>
     </div>
   )

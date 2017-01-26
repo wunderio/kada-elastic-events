@@ -11,7 +11,6 @@ import {
   RefinementListFilter,
   ResetFilters,
   GroupedSelectedFilters,
-  HierarchicalRefinementFilter,
   SearchkitComponent,
   SearchkitProvider,
   SearchkitManager,
@@ -22,8 +21,12 @@ import {
   Layout, LayoutBody, LayoutResults,
   SideBar,
   Panel,
-  ActionBar, ActionBarRow
+  ActionBar, ActionBarRow,
+  FilteredQuery,
+  TermQuery
 } from "searchkit";
+
+import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 
 import "./styles/theme.scss";
 
@@ -43,7 +46,16 @@ export class KadaSearch extends React.Component<any, any> {
     super();
     // new searchkit Manager connecting to ES server
     const host = SearchServerURL;
-    this.searchkit = new SearchkitManager(host);
+    this.searchkit = new SearchkitManager(host, {
+      // Disable history for now so text searches don't mess up Drupal with
+      // the q parameter in the query string.
+      useHistory: false,
+    });
+
+    this.searchkit.addDefaultQuery((query)=> {
+      return query.addQuery(FilteredQuery({
+      }))
+    })
 
     // Attach translations to Drupal
     this.searchkit.translateFunction = (key) => {
@@ -74,14 +86,16 @@ export class KadaSearch extends React.Component<any, any> {
               <SearchBox
                 autofocus={false}
                 searchOnChange={true}
-                queryFields={["title_field", "field_lead_paragraph_et"]}
-              />
-
-              <HierarchicalRefinementFilter
-                id="field_event_date"
-                title={window.Drupal.t("When")}
-                field="field_event_date"
-                orderKey="field_event_date.order"
+                queryFields={[
+                  "title_field^8",
+                  "field_lead_paragraph_et^5",
+                  "field_address^13"
+                ]}
+                prefixQueryFields={[
+                  "title_field^8",
+                  "field_lead_paragraph_et^5",
+                  "field_address^13"
+                ]}
               />
 
               <RefinementListFilter
@@ -103,6 +117,34 @@ export class KadaSearch extends React.Component<any, any> {
                 containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
+
+              <RefinementListFilter
+                id="district"
+                title={window.Drupal.t("Where")}
+                field="field_district"
+                operator="AND"
+                size={10}
+                containerComponent={CollapsedPanel}
+                listComponent={ItemHistogramList}
+              />
+
+              <RefinementListFilter
+                id="field_keywords_et"
+                title={window.Drupal.t("Keywords")}
+                field="field_keywords_et"
+                operator="AND"
+                size={10}
+                containerComponent={CollapsedPanel}
+                listComponent={ItemHistogramList}
+              />
+
+              <HierarchicalRefinementFilter
+                id="field_event_date_hierarchy"
+                title={window.Drupal.t("When")}
+                field="field_event_date_hierarchy"
+                orderKey="field_event_date_hierarchy.order"
+              />
+
             </SideBar>
 
             <LayoutResults>
@@ -117,20 +159,28 @@ export class KadaSearch extends React.Component<any, any> {
                 </ActionBarRow>
               </ActionBar>
 
-              <Pagination showNumbers={true}/>
+              <Pagination
+                showNumbers={true}
+                pageScope={2}
+              />
 
               <div className="clearfix">
                 <Hits
                   itemComponent={EventListItem}
                   hitsPerPage={10}
-                  highlightFields={["title_field"]}
+                  highlightFields={[
+                    "title_field",
+                    "field_lead_paragraph_et",
+                  ]}
                   scrollTo={false}
                 />
               </div>
 
-              <NoHits suggestionsField="title_field"/>
+              <NoHits
+                suggestionsField="title_field"
+              />
 
-              <Pagination showNumbers={true}/>
+              <Pagination />
 
             </LayoutResults>
           </LayoutBody>
