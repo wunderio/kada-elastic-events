@@ -110,14 +110,13 @@ export class KadaSearch extends React.Component<any, any> {
                 listComponent={ItemHistogramList}
               />
 
-              <RefinementListFilter
+              <RefinementWithText
                 id="target_audience"
                 title={window.Drupal.t("For whom")}
                 field="field_target_audience"
-                operator="AND"
-                size={10}
-                containerComponent={CollapsedPanel}
+                operator="OR"
                 listComponent={ItemHistogramList}
+                description={window.Drupal.t("Select one or many")}
               />
 
               <RefinementWithText
@@ -127,7 +126,7 @@ export class KadaSearch extends React.Component<any, any> {
                 operator="OR"
                 size={10}
                 listComponent={ItemHistogramList}
-                description={window.Drupal.t("Select one or many districts")}
+                description={window.Drupal.t("Select one or many")}
               />
 
               <HierarchicalRefinementFilter

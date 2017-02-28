@@ -181,7 +181,8 @@ body {
     }
   }
 
-  &.filter--district {
+  &.filter--district,
+  &.filter--target_audience {
     .sk-panel__header {
       display: none;
     }
