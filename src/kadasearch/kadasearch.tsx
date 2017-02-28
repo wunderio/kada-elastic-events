@@ -27,6 +27,7 @@ import {
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
+import RefinementWithText from './RefinementWithText'
 
 import "./styles/theme.scss";
 
@@ -89,11 +90,13 @@ export class KadaSearch extends React.Component<any, any> {
                 queryFields={[
                   "title_field^8",
                   "field_lead_paragraph_et^5",
+                  "field_district^10",
                   "field_address^13"
                 ]}
                 prefixQueryFields={[
                   "title_field^8",
                   "field_lead_paragraph_et^5",
+                  "field_district^10",
                   "field_address^13"
                 ]}
               />
@@ -103,7 +106,6 @@ export class KadaSearch extends React.Component<any, any> {
                 title={window.Drupal.t("What")}
                 field="field_event_types"
                 operator="AND"
-                size={5}
                 containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
               />
@@ -118,24 +120,14 @@ export class KadaSearch extends React.Component<any, any> {
                 listComponent={ItemHistogramList}
               />
 
-              <RefinementListFilter
+              <RefinementWithText
                 id="district"
                 title={window.Drupal.t("Where")}
                 field="field_district"
-                operator="AND"
+                operator="OR"
                 size={10}
-                containerComponent={CollapsedPanel}
                 listComponent={ItemHistogramList}
-              />
-
-              <RefinementListFilter
-                id="field_keywords_et"
-                title={window.Drupal.t("Keywords")}
-                field="field_keywords_et"
-                operator="AND"
-                size={10}
-                containerComponent={CollapsedPanel}
-                listComponent={ItemHistogramList}
+                description={window.Drupal.t("Select one or many districts")}
               />
 
               <HierarchicalRefinementFilter

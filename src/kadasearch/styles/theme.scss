@@ -180,6 +180,12 @@ body {
       }
     }
   }
+
+  &.filter--district {
+    .sk-panel__header {
+      display: none;
+    }
+  }
 }
 
 .sk-item-list {
