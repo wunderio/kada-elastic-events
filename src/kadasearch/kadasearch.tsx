@@ -1,6 +1,6 @@
 import * as React from "react";
-import { EventListItem } from "./HitItems.tsx";
-import Drupal from "../DrupalSettings.tsx";
+import { EventListItem } from "./HitItems";
+import Drupal from "../DrupalSettings";
 
 declare var window;
 
@@ -56,7 +56,7 @@ export class KadaSearch extends React.Component<any, any> {
     this.searchkit.addDefaultQuery((query)=> {
       return query.addQuery(FilteredQuery({
       }))
-    })
+    });
 
     // Attach translations to Drupal
     this.searchkit.translateFunction = (key) => {
