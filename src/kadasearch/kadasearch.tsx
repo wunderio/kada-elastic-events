@@ -129,6 +129,15 @@ export class KadaSearch extends React.Component<any, any> {
                 description={window.Drupal.t("Select one or many")}
               />
 
+              <RefinementListFilter
+                id="hobby_details"
+                title={window.Drupal.t("Fine down search")}
+                field="hobby_details"
+                operator="OR"
+                containerComponent={CollapsedPanel}
+                listComponent={ItemHistogramList}
+              />
+
               <HierarchicalRefinementFilter
                 id="field_event_date_hierarchy"
                 title={window.Drupal.t("When")}
