@@ -28,7 +28,7 @@ if (typeof Drupal === "undefined") {
     settings: extend({
       noDrupal: 'true',
       language: 'fi',
-      currentCalendar: 'events',
+      currentCalendar: 'hobbies',
     }, require("../kada-config.js"))
   }
   window["Drupal"] = DrupalSettings;

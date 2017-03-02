@@ -101,13 +101,11 @@ export class KadaSearch extends React.Component<any, any> {
                 ]}
               />
 
-              <RefinementListFilter
-                id="event_types"
+              <HierarchicalRefinementFilter
+                id="hobby_types"
                 title={window.Drupal.t("What")}
-                field="field_event_types"
-                operator="AND"
-                containerComponent={CollapsedPanel}
-                listComponent={ItemHistogramList}
+                field="field_hobby_category"
+                orderKey="field_hobby_category.level"
               />
 
               <RefinementWithText
