@@ -79,112 +79,226 @@ export class KadaSearch extends React.Component<any, any> {
   }
 
   render() {
-    return (
-      <SearchkitProvider searchkit={this.searchkit}>
-        <Layout size="l">
-          <LayoutBody>
-            <SideBar>
-              <SearchBox
-                autofocus={false}
-                searchOnChange={true}
-                queryFields={[
-                  "title_field^8",
-                  "field_lead_paragraph_et^5",
-                  "field_district^10",
-                  "field_address^13"
-                ]}
-                prefixQueryFields={[
-                  "title_field^8",
-                  "field_lead_paragraph_et^5",
-                  "field_district^10",
-                  "field_address^13"
-                ]}
-              />
-
-              <HierarchicalRefinementFilter
-                id="hobby_types"
-                title={window.Drupal.t("What")}
-                field="field_hobby_category"
-                orderKey="field_hobby_category.level"
-              />
-
-              <RefinementWithText
-                id="target_audience"
-                title={window.Drupal.t("For whom")}
-                field="field_target_audience"
-                operator="OR"
-                listComponent={ItemHistogramList}
-                description={window.Drupal.t("Select one or many")}
-              />
-
-              <RefinementWithText
-                id="district"
-                title={window.Drupal.t("Where")}
-                field="field_district"
-                operator="OR"
-                size={10}
-                listComponent={ItemHistogramList}
-                description={window.Drupal.t("Select one or many")}
-              />
-
-              <RefinementListFilter
-                id="hobby_details"
-                title={window.Drupal.t("Fine down search")}
-                field="hobby_details"
-                operator="OR"
-                containerComponent={CollapsedPanel}
-                listComponent={ItemHistogramList}
-              />
-
-              <HierarchicalRefinementFilter
-                id="field_event_date_hierarchy"
-                title={window.Drupal.t("When")}
-                field="field_event_date_hierarchy"
-                orderKey="field_event_date_hierarchy.order"
-              />
-
-            </SideBar>
-
-            <LayoutResults>
-
-              <ActionBar>
-                <ActionBarRow>
-                  <GroupedSelectedFilters/>
-                  <ResetFilters/>
-                </ActionBarRow>
-                <ActionBarRow>
-                  <HitsStats/>
-                </ActionBarRow>
-              </ActionBar>
-
-              <Pagination
-                showNumbers={true}
-                pageScope={2}
-              />
-
-              <div className="clearfix">
-                <Hits
-                  itemComponent={EventListItem}
-                  hitsPerPage={10}
-                  highlightFields={[
-                    "title_field",
-                    "field_lead_paragraph_et",
+    if (SearchCalendar == 'hobbies') {
+      return (
+        <SearchkitProvider searchkit={this.searchkit}>
+          <Layout size="l">
+            <LayoutBody>
+              <SideBar>
+                <SearchBox
+                  autofocus={false}
+                  searchOnChange={true}
+                  queryFields={[
+                    "title_field^8",
+                    "field_lead_paragraph_et^5",
+                    "field_district^10",
+                    "field_address^13"
                   ]}
-                  scrollTo={false}
+                  prefixQueryFields={[
+                    "title_field^8",
+                    "field_lead_paragraph_et^5",
+                    "field_district^10",
+                    "field_address^13"
+                  ]}
                 />
-              </div>
 
-              <NoHits
-                suggestionsField="title_field"
-              />
+                <HierarchicalRefinementFilter
+                  id="hobby_types"
+                  title={window.Drupal.t("What")}
+                  field="field_hobby_category"
+                  orderKey="field_hobby_category.level"
+                />
 
-              <Pagination />
+                <RefinementWithText
+                  id="target_audience"
+                  title={window.Drupal.t("For whom")}
+                  field="field_target_audience"
+                  operator="OR"
+                  listComponent={ItemHistogramList}
+                  description={window.Drupal.t("Select one or many")}
+                />
 
-            </LayoutResults>
-          </LayoutBody>
+                <RefinementWithText
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  size={10}
+                  listComponent={ItemHistogramList}
+                  description={window.Drupal.t("Select one or many")}
+                />
 
-        </Layout>
-      </SearchkitProvider>
-    );
+                <RefinementListFilter
+                  id="hobby_details"
+                  title={window.Drupal.t("Fine down search")}
+                  field="hobby_details"
+                  operator="OR"
+                  containerComponent={CollapsedPanel}
+                  listComponent={ItemHistogramList}
+                />
+
+                <HierarchicalRefinementFilter
+                  id="field_event_date_hierarchy"
+                  title={window.Drupal.t("When")}
+                  field="field_event_date_hierarchy"
+                  orderKey="field_event_date_hierarchy.order"
+                />
+
+              </SideBar>
+
+              <LayoutResults>
+
+                <ActionBar>
+                  <ActionBarRow>
+                    <GroupedSelectedFilters/>
+                    <ResetFilters/>
+                  </ActionBarRow>
+                  <ActionBarRow>
+                    <HitsStats/>
+                  </ActionBarRow>
+                </ActionBar>
+
+                <Pagination
+                  showNumbers={true}
+                  pageScope={2}
+                />
+
+                <div className="clearfix">
+                  <Hits
+                    itemComponent={EventListItem}
+                    hitsPerPage={10}
+                    highlightFields={[
+                      "title_field",
+                      "field_lead_paragraph_et",
+                    ]}
+                    scrollTo={false}
+                  />
+                </div>
+
+                <NoHits
+                  suggestionsField="title_field"
+                />
+
+                <Pagination />
+
+              </LayoutResults>
+            </LayoutBody>
+
+          </Layout>
+        </SearchkitProvider>
+      );
+    }
+    else {
+      return (
+        <SearchkitProvider searchkit={this.searchkit}>
+          <Layout size="l">
+            <LayoutBody>
+              <SideBar>
+                <SearchBox
+                  autofocus={false}
+                  searchOnChange={true}
+                  queryFields={[
+                    "title_field^8",
+                    "field_lead_paragraph_et^5",
+                    "field_address^13"
+                  ]}
+                  prefixQueryFields={[
+                    "title_field^8",
+                    "field_lead_paragraph_et^5",
+                    "field_address^13"
+                  ]}
+                />
+
+                <RefinementListFilter
+                  id="event_types"
+                  title={window.Drupal.t("What")}
+                  field="field_event_types"
+                  operator="AND"
+                  size={5}
+                  containerComponent={CollapsedPanel}
+                  listComponent={ItemHistogramList}
+                />
+
+                <RefinementListFilter
+                  id="target_audience"
+                  title={window.Drupal.t("For whom")}
+                  field="field_target_audience"
+                  operator="AND"
+                  size={10}
+                  containerComponent={CollapsedPanel}
+                  listComponent={ItemHistogramList}
+                />
+
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="AND"
+                  size={10}
+                  containerComponent={CollapsedPanel}
+                  listComponent={ItemHistogramList}
+                />
+
+                <RefinementListFilter
+                  id="field_keywords_et"
+                  title={window.Drupal.t("Keywords")}
+                  field="field_keywords_et"
+                  operator="AND"
+                  size={10}
+                  containerComponent={CollapsedPanel}
+                  listComponent={ItemHistogramList}
+                />
+
+                <HierarchicalRefinementFilter
+                  id="field_event_date_hierarchy"
+                  title={window.Drupal.t("When")}
+                  field="field_event_date_hierarchy"
+                  orderKey="field_event_date_hierarchy.order"
+                />
+
+              </SideBar>
+
+              <LayoutResults>
+
+                <ActionBar>
+                  <ActionBarRow>
+                    <GroupedSelectedFilters/>
+                    <ResetFilters/>
+                  </ActionBarRow>
+                  <ActionBarRow>
+                    <HitsStats/>
+                  </ActionBarRow>
+                </ActionBar>
+
+                <Pagination
+                  showNumbers={true}
+                  pageScope={2}
+                />
+
+                <div className="clearfix">
+                  <Hits
+                    itemComponent={EventListItem}
+                    hitsPerPage={10}
+                    highlightFields={[
+                      "title_field",
+                      "field_lead_paragraph_et",
+                    ]}
+                    scrollTo={false}
+                  />
+                </div>
+
+                <NoHits
+                  suggestionsField="title_field"
+                />
+
+                <Pagination />
+
+              </LayoutResults>
+            </LayoutBody>
+
+          </Layout>
+        </SearchkitProvider>
+      );
+    }
   }
 }
