@@ -110,15 +110,21 @@ export class KadaSearch extends React.Component<any, any> {
                   orderKey="field_hobby_category.level"
                 />
 
-                <RefinementListFilter
-                  id="district"
-                  title={window.Drupal.t("Where")}
-                  field="field_district"
-                  operator="OR"
-                  //containerComponent={CollapsedPanel}
-                  listComponent={MultiSelect}
-                  size={100}
-                />
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("Where")}>
+
+                  <RefinementListFilter
+                    id="district"
+                    title={window.Drupal.t("Write or search from dropdown")}
+                    field="field_district"
+                    operator="OR"
+                    listComponent={MultiSelect}
+                    size={100}
+                  />
+
+                </Panel>
 
                 <RefinementWithText
                   id="target_audience"
@@ -129,12 +135,36 @@ export class KadaSearch extends React.Component<any, any> {
                   description={window.Drupal.t("Select one or many")}
                 />
 
-                <HierarchicalRefinementFilter
-                  id="field_event_date_hierarchy"
-                  title={window.Drupal.t("When")}
-                  field="field_event_date_hierarchy"
-                  orderKey="field_event_date_hierarchy.order"
-                />
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("When")}>
+
+                  <RefinementListFilter
+                    id="weekday"
+                    title={window.Drupal.t("Weekday")}
+                    field="field_event_date_weekday"
+                    operator="AND"
+                    orderKey="_term"
+                    listComponent={ItemHistogramList}
+                  />
+
+                  <RefinementListFilter
+                    id="timeofday"
+                    title={window.Drupal.t("Time of day")}
+                    field="field_event_date_timeofday"
+                    operator="AND"
+                    orderKey="_term"
+                    listComponent={ItemHistogramList}
+                  />
+
+                  <HierarchicalRefinementFilter
+                    id="field_event_date_hierarchy"
+                    title={window.Drupal.t("Year/Month")}
+                    field="field_event_date_hierarchy"
+                    orderKey="field_event_date_hierarchy.order"
+                  />
+                </Panel>
 
                 <RefinementListFilter
                   id="hobby_details"

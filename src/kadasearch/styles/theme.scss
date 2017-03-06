@@ -48,14 +48,6 @@ body {
     .sk-range-input {
       margin-top:10px;
     }
-
-    // .sk-selected-filters {
-    //   flex-flow: column nowrap;
-    //   &-option {
-    //     margin-right:0;
-    //     margin-bottom:10px;
-    //   }
-    // }
   }
 
   &__results {
@@ -182,10 +174,29 @@ body {
     }
   }
 
-  &.filter--district,
   &.filter--target_audience {
     .sk-panel__header {
       display: none;
+    }
+  }
+
+  &.filter--district,
+  &.filter--timeofday,
+  &.filter--weekday {
+    .sk-panel__header {
+      background-color: transparent;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      padding: 0;
+    }
+  }
+
+  .filter--field_event_date_hierarchy {
+    .sk-hierarchical-refinement-list__header {
+      background-color: transparent;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      padding: 0;
     }
   }
 }
