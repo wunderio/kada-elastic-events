@@ -140,22 +140,18 @@ export class KadaSearch extends React.Component<any, any> {
                   defaultCollapsed={true}
                   title={window.Drupal.t("When")}>
 
-                  <RefinementListFilter
+                  <HierarchicalRefinementFilter
                     id="weekday"
                     title={window.Drupal.t("Weekday")}
                     field="field_event_date_weekday"
-                    operator="AND"
-                    orderKey="_term"
-                    listComponent={ItemHistogramList}
+                    orderKey="field_event_date_weekday.order"
                   />
 
-                  <RefinementListFilter
+                  <HierarchicalRefinementFilter
                     id="timeofday"
                     title={window.Drupal.t("Time of day")}
                     field="field_event_date_timeofday"
-                    operator="AND"
-                    orderKey="_term"
-                    listComponent={ItemHistogramList}
+                    orderKey="field_event_date_timeofday.order"
                   />
 
                   <HierarchicalRefinementFilter
