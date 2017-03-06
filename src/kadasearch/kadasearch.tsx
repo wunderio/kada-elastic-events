@@ -1,6 +1,7 @@
 import * as React from "react";
 import { EventListItem } from "./HitItems";
 import Drupal from "../DrupalSettings";
+var MultiSelect = require('searchkit-multiselect');
 
 declare var window;
 
@@ -109,6 +110,16 @@ export class KadaSearch extends React.Component<any, any> {
                   orderKey="field_hobby_category.level"
                 />
 
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  //containerComponent={CollapsedPanel}
+                  listComponent={MultiSelect}
+                  size={100}
+                />
+
                 <RefinementWithText
                   id="target_audience"
                   title={window.Drupal.t("For whom")}
@@ -118,30 +129,20 @@ export class KadaSearch extends React.Component<any, any> {
                   description={window.Drupal.t("Select one or many")}
                 />
 
-                <RefinementWithText
-                  id="district"
-                  title={window.Drupal.t("Where")}
-                  field="field_district"
-                  operator="OR"
-                  size={10}
-                  listComponent={ItemHistogramList}
-                  description={window.Drupal.t("Select one or many")}
+                <HierarchicalRefinementFilter
+                  id="field_event_date_hierarchy"
+                  title={window.Drupal.t("When")}
+                  field="field_event_date_hierarchy"
+                  orderKey="field_event_date_hierarchy.order"
                 />
 
                 <RefinementListFilter
                   id="hobby_details"
                   title={window.Drupal.t("Fine down search")}
                   field="hobby_details"
-                  operator="OR"
+                  operator="AND"
                   containerComponent={CollapsedPanel}
                   listComponent={ItemHistogramList}
-                />
-
-                <HierarchicalRefinementFilter
-                  id="field_event_date_hierarchy"
-                  title={window.Drupal.t("When")}
-                  field="field_event_date_hierarchy"
-                  orderKey="field_event_date_hierarchy.order"
                 />
 
               </SideBar>
