@@ -1,6 +1,8 @@
 import * as React from "react";
+import * as moment from "moment";
 import { EventListItem } from "./HitItems";
 import Drupal from "../DrupalSettings";
+
 var MultiSelect = require('searchkit-multiselect');
 
 declare var window;
@@ -17,18 +19,18 @@ import {
   SearchkitManager,
   NoHits,
   Pagination,
-  RangeFilter,
   ItemHistogramList,
   Layout, LayoutBody, LayoutResults,
   SideBar,
   Panel,
-  ActionBar, ActionBarRow,
-  FilteredQuery,
-  TermQuery
+  ActionBar, ActionBarRow
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
+import { DateRangeFilter } from './DateRangeFilter'
+import { DateRangeCalendar } from './DateRangeCalendar'
+import { DateRangeQuery } from "./query/DateRangeQuery";
 
 import "./styles/theme.scss";
 
@@ -41,6 +43,7 @@ let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 
+
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
 
@@ -52,11 +55,6 @@ export class KadaSearch extends React.Component<any, any> {
       // Disable history for now so text searches don't mess up Drupal with
       // the q parameter in the query string.
       useHistory: false,
-    });
-
-    this.searchkit.addDefaultQuery((query)=> {
-      return query.addQuery(FilteredQuery({
-      }))
     });
 
     // Attach translations to Drupal
@@ -103,6 +101,29 @@ export class KadaSearch extends React.Component<any, any> {
                   ]}
                 />
 
+                <DateRangeFilter
+                  id="field_event_date"
+                  title={window.Drupal.t("When")}
+                  fromDate={moment()}
+                  fromDateField="field_event_date.from"
+                  toDateField="field_event_date.to"
+                  calendarComponent={DateRangeCalendar}
+                  fieldOptions={{
+                    type: 'nested',
+                    options: {
+                      path: 'field_event_date'
+                    }
+                  }}
+                  rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                />
+
+                <HierarchicalRefinementFilter
+                  id="timeofday"
+                  title={window.Drupal.t("Time of day")}
+                  field="field_event_date_timeofday"
+                  orderKey="field_event_date_timeofday.order"
+                />
+
                 <HierarchicalRefinementFilter
                   id="hobby_types"
                   title={window.Drupal.t("What")}
@@ -147,19 +168,6 @@ export class KadaSearch extends React.Component<any, any> {
                     orderKey="field_event_date_weekday.order"
                   />
 
-                  <HierarchicalRefinementFilter
-                    id="timeofday"
-                    title={window.Drupal.t("Time of day")}
-                    field="field_event_date_timeofday"
-                    orderKey="field_event_date_timeofday.order"
-                  />
-
-                  <HierarchicalRefinementFilter
-                    id="field_event_date_hierarchy"
-                    title={window.Drupal.t("Year/Month")}
-                    field="field_event_date_hierarchy"
-                    orderKey="field_event_date_hierarchy.order"
-                  />
                 </Panel>
 
                 <RefinementListFilter
@@ -198,7 +206,7 @@ export class KadaSearch extends React.Component<any, any> {
                       "title_field",
                       "field_lead_paragraph_et",
                     ]}
-                    scrollTo={false}
+                    scrollTo=".sk-layout"
                   />
                 </div>
 
@@ -236,6 +244,22 @@ export class KadaSearch extends React.Component<any, any> {
                   ]}
                 />
 
+                <DateRangeFilter
+                  id="field_event_date"
+                  title={window.Drupal.t("When")}
+                  fromDate={moment()}
+                  fromDateField="field_event_date.from"
+                  toDateField="field_event_date.to"
+                  calendarComponent={DateRangeCalendar}
+                  fieldOptions={{
+                    type: 'nested',
+                    options: {
+                      path: 'field_event_date'
+                    }
+                  }}
+                  rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                />
+
                 <RefinementListFilter
                   id="event_types"
                   title={window.Drupal.t("What")}
@@ -246,41 +270,38 @@ export class KadaSearch extends React.Component<any, any> {
                   listComponent={ItemHistogramList}
                 />
 
-                <RefinementListFilter
+                <RefinementWithText
                   id="target_audience"
                   title={window.Drupal.t("For whom")}
                   field="field_target_audience"
-                  operator="AND"
-                  size={10}
-                  containerComponent={CollapsedPanel}
+                  operator="OR"
                   listComponent={ItemHistogramList}
+                  description={window.Drupal.t("Select one or many")}
                 />
+
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("Where")}>
+
+                  <RefinementListFilter
+                    id="district"
+                    title={window.Drupal.t("Write or search from dropdown")}
+                    field="field_district"
+                    operator="OR"
+                    listComponent={MultiSelect}
+                    size={100}
+                  />
+
+                </Panel>
 
                 <RefinementListFilter
-                  id="district"
-                  title={window.Drupal.t("Where")}
-                  field="field_district"
+                  id="hobby_details"
+                  title={window.Drupal.t("Fine down search")}
+                  field="hobby_details"
                   operator="AND"
-                  size={10}
                   containerComponent={CollapsedPanel}
                   listComponent={ItemHistogramList}
-                />
-
-                <RefinementListFilter
-                  id="field_keywords_et"
-                  title={window.Drupal.t("Keywords")}
-                  field="field_keywords_et"
-                  operator="AND"
-                  size={10}
-                  containerComponent={CollapsedPanel}
-                  listComponent={ItemHistogramList}
-                />
-
-                <HierarchicalRefinementFilter
-                  id="field_event_date_hierarchy"
-                  title={window.Drupal.t("When")}
-                  field="field_event_date_hierarchy"
-                  orderKey="field_event_date_hierarchy.order"
                 />
 
               </SideBar>
@@ -310,7 +331,7 @@ export class KadaSearch extends React.Component<any, any> {
                       "title_field",
                       "field_lead_paragraph_et",
                     ]}
-                    scrollTo={false}
+                    scrollTo=".sk-layout"
                   />
                 </div>
 

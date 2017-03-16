@@ -1,6 +1,7 @@
 @import "variables.scss";
 @import "abstractions.scss";
 @import "react-select.scss";
+@import "calendar.scss";
 // @TODO resolve imports via alias
 @import "../../../node_modules/searchkit/theming/components.scss";
 
@@ -83,8 +84,6 @@ body {
   margin:0 15px 15px;
 
   &-row {
-    display:flex;
-    flex-flow: row wrap;
     margin:0px 0 10px;
 
     &:last-child {
@@ -148,6 +147,32 @@ body {
 
   &__action {
     display:none;
+  }
+}
+
+.sk-date-box {
+  background-color: $sk-item-background;
+  border-radius: $sk-border-radius;
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex: 1;
+
+  .sk-date-box__text {
+    border: 0;
+    background:transparent;
+    flex: 1;
+    font-weight:200;
+    font-size: $paragraph-font-size;
+    padding: 10px 9px 10px;
+    user-select: initial;
+    width: auto;
+
+
+    &::-webkit-input-placeholder  {
+      color: $sk-placeholder-color;
+      font-weight:100;
+    }
   }
 }
 
@@ -345,6 +370,37 @@ body {
 .sk-action-bar {
   .sk-select, .sk-toggle {
     margin-left:15px;
+  }
+
+  .sk-filter-groups {
+    display: block;
+  }
+
+  .sk-filter-group {
+    display: flex;
+    flex: 1 1 200px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  @include breakpoint('tablet') {
+    .sk-filter-group {
+      display: inline-block;
+    }
+  }
+
+  .sk-filter-group {
+    &__remove-action {
+      line-height: 2.6;
+    }
+  }
+
+  .sk-filter-group-items {
+    align-self: top;
+
+    &__title {
+      padding: 10px 0 0;
+    }
   }
 }
 
