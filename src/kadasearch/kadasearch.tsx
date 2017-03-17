@@ -101,29 +101,6 @@ export class KadaSearch extends React.Component<any, any> {
                   ]}
                 />
 
-                <DateRangeFilter
-                  id="field_event_date"
-                  title={window.Drupal.t("When")}
-                  fromDate={moment()}
-                  fromDateField="field_event_date.from"
-                  toDateField="field_event_date.to"
-                  calendarComponent={DateRangeCalendar}
-                  fieldOptions={{
-                    type: 'nested',
-                    options: {
-                      path: 'field_event_date'
-                    }
-                  }}
-                  rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
-                />
-
-                <HierarchicalRefinementFilter
-                  id="timeofday"
-                  title={window.Drupal.t("Time of day")}
-                  field="field_event_date_timeofday"
-                  orderKey="field_event_date_timeofday.order"
-                />
-
                 <HierarchicalRefinementFilter
                   id="hobby_types"
                   title={window.Drupal.t("What")}
@@ -168,6 +145,28 @@ export class KadaSearch extends React.Component<any, any> {
                     orderKey="field_event_date_weekday.order"
                   />
 
+                  <HierarchicalRefinementFilter
+                    id="timeofday"
+                    title={window.Drupal.t("Time of day")}
+                    field="field_event_date_timeofday"
+                    orderKey="field_event_date_timeofday.order"
+                  />
+
+                  <DateRangeFilter
+                    id="field_event_date"
+                    title={window.Drupal.t("Dates")}
+                    fromDate={moment()}
+                    fromDateField="field_event_date.from"
+                    toDateField="field_event_date.to"
+                    calendarComponent={DateRangeCalendar}
+                    fieldOptions={{
+                      type: 'nested',
+                      options: {
+                        path: 'field_event_date'
+                      }
+                    }}
+                    rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                  />
                 </Panel>
 
                 <RefinementListFilter
