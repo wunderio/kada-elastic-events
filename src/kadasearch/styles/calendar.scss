@@ -91,6 +91,57 @@
     position: relative;
   }
 
+  .rc-calendar-month-panel-cell {
+    padding: 5px;
+
+    .rc-calendar-month-panel-month {
+      border-radius: 5px;
+      position: relative;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month,
+  .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month:hover {
+    background: $turkucalendar-darkgray;
+    color: $turkucalendar-lightgray;
+  }
+
+  .rc-calendar-year-panel-cell {
+    padding: 5px;
+
+    .rc-calendar-year-panel-year {
+      border-radius: 5px;
+      position: relative;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year,
+  .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year:hover {
+    background: $turkucalendar-darkgray;
+    color: $turkucalendar-lightgray;
+  }
+
+  .rc-calendar-decade-panel-cell {
+    padding: 5px;
+
+    .rc-calendar-decade-panel-decade {
+      border-radius: 5px;
+      position: relative;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .rc-calendar-decade-panel-selected-cell .rc-calendar-decade-panel-decade,
+  .rc-calendar-decade-panel-selected-cell .rc-calendar-decade-panel-decade:hover {
+    background: $turkucalendar-darkgray;
+    color: $turkucalendar-lightgray;
+  }
+
   .rc-calendar-cell {
     height: 40px;
 

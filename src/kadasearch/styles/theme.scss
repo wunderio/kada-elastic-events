@@ -112,8 +112,6 @@ body {
 
   &.is-focused {
     background: white;
-    border-bottom: 3px solid $sk-text-color;
-    margin-bottom: $sk-sidebar-spacing - 3px;
   }
 
   &.is-focused &__text {
@@ -439,4 +437,8 @@ body {
 
 .sk-hits {
   user-select: initial;
+}
+
+.sk-tag-filter-list .sk-tag-filter {
+  display: block;
 }

@@ -37,6 +37,22 @@ import "./styles/theme.scss";
 const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
 
+const hobbiesQueryFields = [
+  "field_lead_paragraph_et^5",
+  "field_keywords_et^5",
+  "title_field^8",
+  "field_district^10",
+  "field_address^13",
+]
+const eventsQueryFields = [
+  "field_event_types^3",
+  "field_keywords_et^5",
+  "field_lead_paragraph_et^5",
+  "title_field^8",
+  "field_district^10",
+  "field_address^13",
+]
+
 let SearchServer = Drupal.settings.elasticServer;
 let SearchCalendar = Drupal.settings.currentCalendar;
 let SearchLanguage = Drupal.settings.language;
@@ -87,18 +103,8 @@ export class KadaSearch extends React.Component<any, any> {
                 <SearchBox
                   autofocus={false}
                   searchOnChange={true}
-                  queryFields={[
-                    "title_field^8",
-                    "field_lead_paragraph_et^5",
-                    "field_district^10",
-                    "field_address^13"
-                  ]}
-                  prefixQueryFields={[
-                    "title_field^8",
-                    "field_lead_paragraph_et^5",
-                    "field_district^10",
-                    "field_address^13"
-                  ]}
+                  queryFields={hobbiesQueryFields}
+                  prefixQueryFields={hobbiesQueryFields}
                 />
 
                 <HierarchicalRefinementFilter
@@ -137,6 +143,22 @@ export class KadaSearch extends React.Component<any, any> {
                   collapsable={true}
                   defaultCollapsed={true}
                   title={window.Drupal.t("When")}>
+
+                  <DateRangeFilter
+                    id="field_event_date"
+                    title={window.Drupal.t("Date")}
+                    fromDate={moment()}
+                    fromDateField="field_event_date.from"
+                    toDateField="field_event_date.to"
+                    calendarComponent={DateRangeCalendar}
+                    fieldOptions={{
+                      type: 'nested',
+                      options: {
+                        path: 'field_event_date'
+                      }
+                    }}
+                    rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                  />
 
                   <HierarchicalRefinementFilter
                     id="weekday"
@@ -231,16 +253,8 @@ export class KadaSearch extends React.Component<any, any> {
                 <SearchBox
                   autofocus={false}
                   searchOnChange={true}
-                  queryFields={[
-                    "title_field^8",
-                    "field_lead_paragraph_et^5",
-                    "field_address^13"
-                  ]}
-                  prefixQueryFields={[
-                    "title_field^8",
-                    "field_lead_paragraph_et^5",
-                    "field_address^13"
-                  ]}
+                  queryFields={eventsQueryFields}
+                  prefixQueryFields={eventsQueryFields}
                 />
 
                 <DateRangeFilter
