@@ -38,7 +38,6 @@ const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />)
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
 
 const hobbiesQueryFields = [
-  "field_event_date_pretty^1",
   "field_lead_paragraph_et^5",
   "field_keywords_et^5",
   "title_field^8",
@@ -46,7 +45,6 @@ const hobbiesQueryFields = [
   "field_address^13",
 ]
 const eventsQueryFields = [
-  "field_event_date_pretty^1",
   "field_event_types^3",
   "field_keywords_et^5",
   "field_lead_paragraph_et^5",
@@ -108,7 +106,6 @@ export class KadaSearch extends React.Component<any, any> {
                   queryFields={hobbiesQueryFields}
                   prefixQueryFields={hobbiesQueryFields}
                 />
-
 
                 <HierarchicalRefinementFilter
                   id="hobby_types"
@@ -177,6 +174,21 @@ export class KadaSearch extends React.Component<any, any> {
                     orderKey="field_event_date_timeofday.order"
                   />
 
+                  <DateRangeFilter
+                    id="field_event_date"
+                    title={window.Drupal.t("Dates")}
+                    fromDate={moment()}
+                    fromDateField="field_event_date.from"
+                    toDateField="field_event_date.to"
+                    calendarComponent={DateRangeCalendar}
+                    fieldOptions={{
+                      type: 'nested',
+                      options: {
+                        path: 'field_event_date'
+                      }
+                    }}
+                    rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                  />
                 </Panel>
 
                 <RefinementListFilter

@@ -202,7 +202,8 @@ body {
     }
   }
 
-  .kada-hobbies-search &.filter--district {
+  .kada-hobbies-search &.filter--district,
+  .kada-hobbies-search &.filter--field_event_date {
     .sk-panel__header {
       background-color: transparent;
       font-size: 1.1rem;
