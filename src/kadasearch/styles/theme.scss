@@ -30,7 +30,7 @@ body {
 
   &__filters {
     background:$sk-layout-panel-background;
-    padding:15px;
+    padding: 4px;
     flex:0 0 246px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.08);
 
@@ -48,6 +48,12 @@ body {
 
     .sk-range-input {
       margin-top:10px;
+    }
+  }
+
+  @include breakpoint('small-desk') {
+    &__filters {
+      padding: 15px;
     }
   }
 
@@ -320,6 +326,11 @@ body {
 
 .sk-pagination-navigation {
   margin: 20px auto;
+
+  .sk-toggle-option:first-child,
+  .sk-toggle-option:last-child {
+    flex: 3;
+  }
 }
 
 .sk-pagination-select {
