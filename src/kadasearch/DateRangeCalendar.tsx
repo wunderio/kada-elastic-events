@@ -45,6 +45,9 @@ export class Picker extends SearchkitComponent<any, any> {
         calendar={calendar}
         value={props.value}
         dateFormat={format}
+        align={{
+          points: ['bl', 'tl']
+        }}
       >
         {
           () => (
@@ -64,12 +67,6 @@ export class Picker extends SearchkitComponent<any, any> {
 
 
 export class DateRangeCalendar extends SearchkitComponent<any, any> {
-  refs: {
-    [key: string]: any;
-    dateFromInput: any;
-    dateToInput: any;
-  }
-
   constructor(props) {
     super(props)
     const { fromDate, toDate } = props
@@ -95,7 +92,7 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
     this.setState({
       startValue: value[0],
       startOpen: false,
-      endOpen: true,
+      endOpen: false,
     });
     this.handleChange(value)
   }

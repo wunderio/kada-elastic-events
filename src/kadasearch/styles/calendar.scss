@@ -20,33 +20,45 @@
     }
   }
 
-  .rc-calendar-date-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .rc-calendar-range-part {
-    flex: 1 0 50%;
-    width: auto;
+    position: static;
+
+    .rc-calendar-input-wrap {
+      display: none;
+    }
   }
 
   .rc-calendar-range-left {
+    width: 100%;
     float: none;
+  }
+
+  .rc-calendar-range-middle {
+    display: none;
   }
 
   .rc-calendar-range-right {
     float: none;
+
+    .rc-calendar-my-select {
+      display: none;
+    }
+
+    .rc-calendar-header {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .rc-calendar-body {
+      display: none;
+    }
   }
 
   @include breakpoint('small-desk') {
     .rc-calendar.rc-calendar-range {
       width: auto;
-      min-width: 600px;
-    }
-
-    .rc-calendar-date-panel {
-      flex-direction: row;
+      min-width: 280px;
     }
   }
 
