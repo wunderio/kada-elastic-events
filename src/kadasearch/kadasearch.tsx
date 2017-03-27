@@ -144,22 +144,6 @@ export class KadaSearch extends React.Component<any, any> {
                   defaultCollapsed={true}
                   title={window.Drupal.t("When")}>
 
-                  <DateRangeFilter
-                    id="field_event_date"
-                    title={window.Drupal.t("Date")}
-                    fromDate={moment()}
-                    fromDateField="field_event_date.from"
-                    toDateField="field_event_date.to"
-                    calendarComponent={DateRangeCalendar}
-                    fieldOptions={{
-                      type: 'nested',
-                      options: {
-                        path: 'field_event_date'
-                      }
-                    }}
-                    rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
-                  />
-
                   <HierarchicalRefinementFilter
                     id="weekday"
                     title={window.Drupal.t("Weekday")}
