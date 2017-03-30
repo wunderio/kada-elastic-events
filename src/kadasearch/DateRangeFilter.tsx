@@ -127,8 +127,6 @@ export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, an
 
   handleClearState = () => {
     this.accessor.resetState()
-    // Reset date filter value to initial value to keep the filter on.
-    this.accessor.state = this.accessor.state.setValue({fromDate:this.props.fromDate})
   }
 
   defineBEMBlocks() {

@@ -48,10 +48,12 @@ export class DateRangeAccessor extends FilterBasedAccessor<ObjectState> {
     this.rangeFormatter = this.options.rangeFormatter || identity
 
     const { fromDate, toDate } = options
-    this.state = this.state.setValue({
-      fromDate: fromDate,
-      toDate: toDate
-    })
+    if (fromDate || toDate) {
+      this.state = this.state.setValue({
+        fromDate,
+        toDate
+      })
+    }
   }
 
   clearState = () => {
