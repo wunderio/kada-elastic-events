@@ -194,6 +194,15 @@
   .rc-calendar-header {
     height: auto;
     border-color: $turkucalendar-darkgray;
+
+    .rc-calendar-prev-month-btn {
+      left: 0px;
+      padding: 0 15px;
+    }
+    .rc-calendar-next-month-btn {
+      right: 0px;
+      padding: 0 15px;
+    }
   }
 
   .rc-calendar-input-wrap {
@@ -218,5 +227,10 @@
   .rc-calendar-month-select,
   .rc-calendar-day-select {
     color: $turkucalendar-lightgray;
+  }
+
+  .rc-calendar-prev-year-btn,
+  .rc-calendar-next-year-btn {
+    display: none;
   }
 }
