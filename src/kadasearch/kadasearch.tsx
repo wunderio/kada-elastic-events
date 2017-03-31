@@ -23,7 +23,8 @@ import {
   Layout, LayoutBody, LayoutResults,
   SideBar,
   Panel,
-  ActionBar, ActionBarRow
+  ActionBar, ActionBarRow,
+  QueryString
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
@@ -52,6 +53,17 @@ const eventsQueryFields = [
   "field_district^10",
   "field_address^13",
 ]
+
+// Available query options:
+// https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
+const queryOptions = {
+  fuzziness: 'AUTO',
+  phrase_slop: 2,
+}
+const prefixQueryOptions = {
+  fuzziness: 'AUTO',
+  phrase_slop: 2,
+}
 
 let SearchServer = Drupal.settings.elasticServer;
 let SearchCalendar = Drupal.settings.currentCalendar;
@@ -105,6 +117,9 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={hobbiesQueryFields}
                   prefixQueryFields={hobbiesQueryFields}
+                  queryOptions={queryOptions}
+                  prefixQueryOptions={prefixQueryOptions}
+                  queryBuilder={QueryString}
                 />
 
                 <Panel
@@ -245,6 +260,9 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={eventsQueryFields}
                   prefixQueryFields={eventsQueryFields}
+                  queryOptions={queryOptions}
+                  prefixQueryOptions={prefixQueryOptions}
+                  queryBuilder={QueryString}
                 />
 
                 <DateRangeFilter
