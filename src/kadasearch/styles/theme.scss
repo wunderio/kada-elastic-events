@@ -232,6 +232,10 @@ body {
   }
 }
 
+.filter--hobby_types .sk-hierarchical-refinement-list__header {
+  display: none;
+}
+
 .sk-item-list {
   &__item {
     background-color: $sk-item-background;

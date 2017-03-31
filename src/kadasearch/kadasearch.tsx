@@ -107,12 +107,19 @@ export class KadaSearch extends React.Component<any, any> {
                   prefixQueryFields={hobbiesQueryFields}
                 />
 
-                <HierarchicalRefinementFilter
-                  id="hobby_types"
-                  title={window.Drupal.t("What")}
-                  field="field_hobby_category"
-                  orderKey="field_hobby_category.level"
-                />
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("What")}>
+
+                  <HierarchicalRefinementFilter
+                    id="hobby_types"
+                    title={null}
+                    field="field_hobby_category"
+                    orderKey="field_hobby_category.level"
+                  />
+
+                </Panel>
 
                 <Panel
                   collapsable={true}
@@ -121,7 +128,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                   <RefinementListFilter
                     id="district"
-                    title={window.Drupal.t("Write or search from dropdown")}
+                    title={window.Drupal.t("Select a city district")}
                     field="field_district"
                     operator="OR"
                     listComponent={MultiSelect}
