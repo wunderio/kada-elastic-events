@@ -335,7 +335,22 @@ body {
 }
 
 .sk-pagination-navigation {
-  margin: 20px auto;
+  .sk-toggle-option {
+    margin: 4px;
+    display: none;
+
+    // On mobile, show only previous, next and current page
+    &[data-key="previous"],
+    &[data-key="next"],
+    &.is-active {
+      display: initial;
+    }
+
+    // Above tablet size, show full pager
+    @include breakpoint('tablet') {
+      display: initial;
+    }
+  }
 
   .sk-toggle-option:first-child,
   .sk-toggle-option:last-child {

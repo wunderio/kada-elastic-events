@@ -240,7 +240,10 @@ export class KadaSearch extends React.Component<any, any> {
                   suggestionsField="title_field"
                 />
 
-                <Pagination />
+                <Pagination
+                  showNumbers={true}
+                  pageScope={2}
+                />
 
               </LayoutResults>
             </LayoutBody>
@@ -360,7 +363,10 @@ export class KadaSearch extends React.Component<any, any> {
                   suggestionsField="title_field"
                 />
 
-                <Pagination />
+                <Pagination
+                  showNumbers={true}
+                  pageScope={2}
+                />
 
               </LayoutResults>
             </LayoutBody>
