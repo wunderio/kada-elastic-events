@@ -38,17 +38,21 @@ import "./styles/theme.scss";
 const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
 
+// @todo: some of the fields containing searcheable data are deactivated for
+// now, so the client can test what works best for them. When this is
+// considered stable, it will make sense to remove the fields entirely from the
+// search options.
 const hobbiesQueryFields = [
   "field_keywords_et.raw^13",
   "field_keywords_et.stemmed^11",
   "field_keywords_et.autocomplete",
   "title_field^10",
   "title_field.autocomplete^2",
-  "field_district^8",
-  "field_lead_paragraph_et^3",
-  "field_address.raw^4",
-  "field_address.standard^3",
-  "field_address.autocomplete",
+  // "field_district^8",
+  // "field_lead_paragraph_et^3",
+  // "field_address.raw^4",
+  // "field_address.standard^3",
+  // "field_address.autocomplete",
 ]
 const eventsQueryFields = [
   "field_keywords_et.raw^13",
@@ -56,13 +60,13 @@ const eventsQueryFields = [
   "field_keywords_et.autocomplete",
   "title_field^10",
   "title_field.autocomplete^2",
-  "field_district^8",
-  "field_event_types.raw^6",
-  "field_event_types.stemmed^5",
-  "field_lead_paragraph_et^3",
-  "field_address.raw^4",
-  "field_address.standard^3",
-  "field_address.autocomplete",
+  // "field_district^8",
+  // "field_event_types.raw^6",
+  // "field_event_types.stemmed^5",
+  // "field_lead_paragraph_et^3",
+  // "field_address.raw^4",
+  // "field_address.standard^3",
+  // "field_address.autocomplete",
 ]
 
 // Available query options:
