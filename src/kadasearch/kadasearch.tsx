@@ -74,6 +74,7 @@ const eventsQueryFields = [
 const queryOptions = {
   fuzziness: 0,
   phrase_slop: 2,
+  default_operator: 'AND',
 }
 const prefixQueryOptions = {
   fuzziness: 0,
