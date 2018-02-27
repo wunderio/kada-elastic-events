@@ -80,9 +80,7 @@ export class KadaSearch extends React.Component<any, any> {
     // new searchkit Manager connecting to ES server
     const host = SearchServerURL;
     this.searchkit = new SearchkitManager(host, {
-      // Disable history for now so text searches don't mess up Drupal with
-      // the q parameter in the query string.
-      useHistory: false,
+      useHistory: true,
     });
 
     // Attach translations to Drupal
@@ -120,6 +118,7 @@ export class KadaSearch extends React.Component<any, any> {
                   queryOptions={queryOptions}
                   prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
+                  id='keyword'
                 />
 
                 <Panel
