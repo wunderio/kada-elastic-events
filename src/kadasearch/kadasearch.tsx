@@ -281,6 +281,7 @@ export class KadaSearch extends React.Component<any, any> {
                   queryOptions={queryOptions}
                   prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
+                  id='keyword'
                 />
 
                 <DateRangeFilter
