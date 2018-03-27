@@ -1,12 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
-import 'rc-calendar/assets/index.css';
-
-import Drupal from "../DrupalSettings.tsx";
-
-declare var window;
-
-moment.locale(Drupal.settings.language)
+const styles = require("rc-calendar/assets/index.css");
 
 import {
   SearchkitComponent,
@@ -52,11 +46,11 @@ export class Picker extends SearchkitComponent<any, any> {
         {
           () => (
             <div className="sk-date-box">
-              <div className="sk-date-box__text" style={{flex:"1 0 80px"}}>
+              <div className="sk-date-box__label" style={{flex:"1 0 80px"}}>
                 {this.props.dateInputPlaceholder}:
               </div>
-              <div className="sk-date-box__text" style={{flex:"1 0 50%"}}>
-                {showValue && showValue.format(fullFormat)}
+              <div className="sk-date-box__value" style={{flex:"1 0 50%"}}>
+                {showValue && moment(showValue).format(fullFormat)}
               </div>
             </div>
           )
@@ -113,6 +107,7 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
     })
   }
 
+  // For disabling past dates
   disabledPastDate = (endValue) => {
     if (endValue.diff(moment(), 'days') < 0) {
       return true
@@ -147,8 +142,8 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
     const state = this.state;
     const { fromDate, toDate, fromDateValue, toDateValue } = this.props
 
-    const fromLabel = window.Drupal.t("From date");
-    const toLabel = window.Drupal.t("To date");
+    const fromLabel = "From";
+    const toLabel = "To";
 
     return (
       <div>
@@ -157,7 +152,6 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
           open={this.state.startOpen}
           type="start"
           showValue={fromDateValue}
-          disabledDate={this.disabledPastDate}
           value={[fromDate, toDate]}
           onChange={this.onStartChange}
           dateInputPlaceholder={fromLabel}

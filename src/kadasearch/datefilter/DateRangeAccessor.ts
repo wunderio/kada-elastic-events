@@ -1,24 +1,16 @@
 import * as moment from "moment";
-
 import { get, identity } from "lodash"
 import {
   ObjectState,
-  FilterBasedAccessor,
   FilterBucket,
-  CardinalityMetric,
-  HistogramBucket,
   BoolMust,
   FieldOptions,
   FieldContext,
   FieldContextFactory,
-  RangeOption,
-  ImmutableQuery
+  FilterBasedAccessor,
 } from "searchkit";
 
-import { DateRangeQuery } from "../query/DateRangeQuery";
-
-import { createEventSortQuery } from '../EventSorting'
-
+import { DateRangeQuery } from "./DateRangeQuery";
 
 export interface DateRangeAccessorOptions {
   title:string
@@ -59,6 +51,28 @@ export class DateRangeAccessor extends FilterBasedAccessor<ObjectState> {
   clearState = () => {
     // Need to pass state reset through parent component so view can be updated
     this.options.onClearState()
+  }
+
+  fromQueryObject(ob){
+    let fromValue = ob[this.urlKey + '_from']
+    let toValue = ob[this.urlKey + '_to']
+
+    if (fromValue || toValue) {
+      this.state = this.state.setValue({
+        fromDate: fromValue && moment(+fromValue),
+        toDate: toValue && moment(+toValue)
+      })
+    }
+  }
+
+  getQueryObject(){
+    let val:any = this.state.getValue()
+    let fromDate = val.fromDate && +val.fromDate
+    let toDate = val.toDate && +val.toDate
+    return (val) ? {
+      [this.urlKey + '_from']:fromDate,
+      [this.urlKey + '_to']:toDate
+    } : {}
   }
 
   buildSharedQuery(query) {
@@ -104,33 +118,30 @@ export class DateRangeAccessor extends FilterBasedAccessor<ObjectState> {
   }
 
   buildOwnQuery(query) {
-    let val:any = this.state.getValue()
-    let otherFilters = query.getFiltersWithoutKeys(this.key)
-    let filters = BoolMust([
-      otherFilters,
-      this.fieldContext.wrapFilter(
-        DateRangeQuery(this.options.fromDateField, {
-          lte: +val.toDate
-        })
-      ),
-      this.fieldContext.wrapFilter(
-        DateRangeQuery(this.options.toDateField, {
-          gte: +val.fromDate
-        })
-      )
-    ])
+    if (this.state.hasValue()) {
+      let val:any = this.state.getValue()
+      let otherFilters = query.getFiltersWithoutKeys(this.key)
+      let filters = BoolMust([
+        otherFilters,
+        this.fieldContext.wrapFilter(
+          DateRangeQuery(this.options.fromDateField, {
+            lte: +val.toDate
+          })
+        ),
+        this.fieldContext.wrapFilter(
+          DateRangeQuery(this.options.toDateField, {
+            gte: +val.fromDate
+          })
+        )
+      ])
 
-    query = query.setAggs(
-      FilterBucket(
-        this.key,
-        filters
+      query = query.setAggs(
+        FilterBucket(
+          this.key,
+          filters
+        )
       )
-    )
-
-    query = query.setSort([
-      {"hobby_details" : {"order" : "asc"}},
-      createEventSortQuery(val.fromDate)
-    ])
+    }
 
     return query
   }
