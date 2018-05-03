@@ -29,10 +29,10 @@ import {
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
-import { DateRangeFilter } from './datefilter/DateRangeFilter'
-import { DateRangeCalendar } from './datefilter/DateRangeCalendar'
-import { DateRangeQuery } from "./datefilter/DateRangeQuery";
-import { DateRangeAccessor } from "./datefilter/DateRangeAccessor";
+import { DateRangeFilter } from './DateRangeFilter'
+import { DateRangeCalendar } from './DateRangeCalendar'
+import { DateRangeQuery } from "./query/DateRangeQuery";
+
 import "./styles/theme.scss";
 
 const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);

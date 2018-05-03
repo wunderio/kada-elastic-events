@@ -1,9 +1,11 @@
 import * as React from "react";
 import * as moment from "moment";
 
+
 import {
   SearchkitComponent,
   SearchkitComponentProps,
+  FastClick,
   RenderComponentType,
   RenderComponentPropType,
   renderComponent,
@@ -12,18 +14,13 @@ import {
 } from "searchkit"
 
 import {
-  DateRangeAccessor,
-} from "./DateRangeAccessor"
-
-
-import {
   defaults,
   map,
   get
 } from "lodash"
 
+import { DateRangeAccessor } from "./accessors/DateRangeAccessor"
 
-// For testing without a calendar component. Accepts date math.
 export class DateRangeFilterInput extends SearchkitComponent<any, any> {
   refs: {
     [key: string]: any;
@@ -33,10 +30,7 @@ export class DateRangeFilterInput extends SearchkitComponent<any, any> {
 
   handleDateFinished = (event) => {
     const { onFinished } = this.props
-    const newState = {
-      fromDate: this.refs.dateFromInput.value,
-      toDate: this.refs.dateToInput.value
-    }
+    const newState = { fromDate: this.refs.dateFromInput.value, toDate: this.refs.dateToInput.value }
     onFinished(newState)
   }
 
@@ -72,6 +66,7 @@ export interface DateRangeFilterProps extends SearchkitComponentProps {
 export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, any> {
   accessor:DateRangeAccessor
 
+
   static propTypes = defaults({
     fromDate:React.PropTypes.object,
     toDate:React.PropTypes.object,
@@ -88,10 +83,18 @@ export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, an
     }),
   }, SearchkitComponent.propTypes)
 
+
   static defaultProps = {
     containerComponent: Panel,
-    rangeFormatter: (v) => moment(parseInt(""+v)).format('D.M.YYYY')
+    showHistogram: true,
+    fieldOptions: {
+      type: 'nested',
+      options: {
+        path: 'field_event_date'
+      }
+    }
   }
+
 
   constructor(props){
     super(props)
@@ -134,6 +137,10 @@ export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, an
     }
   }
 
+  calendarUpdate = (newValues) => {
+    this.setCalendarState(newValues)
+  }
+
   setCalendarState = (newValues) => {
     if (!newValues.fromDate) {
       this.accessor.resetState()
@@ -141,10 +148,6 @@ export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, an
     else {
       this.accessor.state = this.accessor.state.setValue(newValues)
     }
-  }
-
-  calendarUpdate = (newValues) => {
-    this.setCalendarState(newValues)
   }
 
   calendarUpdateAndSearch = (newValues) => {
