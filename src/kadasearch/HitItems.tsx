@@ -41,8 +41,8 @@ const EventListItem = (props) => {
     <div className="event__superdate"><a href={url + '#quicktabs-series_events'}>Tapahtumasarja ({source.series_dates_to_event})</a></div>
   ) : null;
 
-  const externalPlace = (source.series_dates_to_event) ? (
-    <div className="event__place">
+  const externalPlace = (source.field_external_place_event) ? (
+    <div className="event__place external">
       <ul className="links">
         <li>{source.field_external_place_event}</li>
       </ul>
