@@ -35,7 +35,7 @@ import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
 import { DateRangeQuery } from "./query/DateRangeQuery";
 
-import "./styles/theme.scss";
+// import "./styles/theme.scss";
 
 const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
@@ -73,15 +73,6 @@ const eventsQueryFields = [
 
 // Available query options:
 // https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
-const queryOptions = {
-  fuzziness: 0,
-  phrase_slop: 2,
-  default_operator: 'AND',
-}
-const prefixQueryOptions = {
-  fuzziness: 0,
-  phrase_slop: 2,
-}
 
 
 let SearchCalendar = 'events';
@@ -182,15 +173,9 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={hobbiesQueryFields}
                   prefixQueryFields={hobbiesQueryFields}
-                  queryOptions={queryOptions}
-                  prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
                   id='keyword'
                 />
-
-
-
-
 
                 <RefinementWithText
                   id="target_audience"
@@ -303,8 +288,6 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={eventsQueryFields}
                   prefixQueryFields={eventsQueryFields}
-                  queryOptions={queryOptions}
-                  prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
                   id='keyword'
                 />
