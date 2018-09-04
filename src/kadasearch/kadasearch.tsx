@@ -75,9 +75,11 @@ const eventsQueryFields = [
 // https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
 
 
+let SearchServer = 'http://dt-demo.turku.fi';
 let SearchCalendar = 'events';
 let SearchLanguage = 'fi';
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
+let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 
 
 
@@ -87,7 +89,7 @@ export class KadaSearch extends React.Component<any, any> {
   constructor() {
     super(null);
     // new searchkit Manager connecting to ES server
-    const host = 'http://dt-demo.turku.fi';
+    const host = SearchServerURL;
     this.searchkit = new SearchkitManager(host, {
       useHistory: true,
     });
