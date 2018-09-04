@@ -1,9 +1,10 @@
 import * as React from "react";
 import * as moment from "moment";
 import { EventListItem } from "./HitItems";
-import Drupal from "../DrupalSettings";
 
-var MultiSelect = require('searchkit-multiselect');
+import "./styles.css";
+
+import { DateRangeFilter, DateRangeCalendar } from "searchkit-datefilter"
 
 declare var window;
 
@@ -24,13 +25,14 @@ import {
   SideBar,
   Panel,
   ActionBar, ActionBarRow,
-  QueryString
+  QueryString,
+  TermQuery,
+  FilteredQuery,
+  BoolShould  
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
-import { DateRangeFilter } from './DateRangeFilter'
-import { DateRangeCalendar } from './DateRangeCalendar'
 import { DateRangeQuery } from "./query/DateRangeQuery";
 
 import "./styles/theme.scss";
@@ -81,42 +83,91 @@ const prefixQueryOptions = {
   phrase_slop: 2,
 }
 
-let SearchServer = Drupal.settings.elasticServer;
-let SearchCalendar = Drupal.settings.currentCalendar;
-let SearchLanguage = Drupal.settings.language;
+
+let SearchCalendar = 'events';
+let SearchLanguage = 'fi';
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
-let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
+
 
 
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
 
   constructor() {
-    super();
+    super(null);
     // new searchkit Manager connecting to ES server
-    const host = SearchServerURL;
+    const host = 'http://dt-demo.turku.fi';
     this.searchkit = new SearchkitManager(host, {
       useHistory: true,
     });
 
     // Attach translations to Drupal
-    this.searchkit.translateFunction = (key) => {
-      let translations = {
-        "searchbox.placeholder": window.Drupal.t("Search"),
-        "pagination.previous": window.Drupal.t("Previous"),
-        "pagination.next": window.Drupal.t("Next"),
-        "reset.clear_all": window.Drupal.t("Clear all filters"),
-        "facets.view_more": window.Drupal.t("View more"),
-        "facets.view_less": window.Drupal.t("View less"),
-        "facets.view_all": window.Drupal.t("View all"),
-        "NoHits.NoResultsFound": window.Drupal.t("No results found for {query}"),
-        "NoHits.DidYouMean": window.Drupal.t("Search for {suggestion}."),
-        "NoHits.SearchWithoutFilters": window.Drupal.t("Search for {query} without filters"),
-        "NoHits.NoResultsFoundDidYouMean": window.Drupal.t("No results found for {query}. Did you mean {suggestion}?"),
-        "hitstats.results_found": window.Drupal.t("{hitCount} results found in {timeTaken} ms"),
-      };
-      return translations[key];
-    };
+    // this.searchkit.translateFunction = (key) => {
+    //   let translations = {
+    //     "searchbox.placeholder": "Search"),
+    //     "pagination.previous": "Previous"),
+    //     "pagination.next": "Next"),
+    //     "reset.clear_all": "Clear all filters"),
+    //     "facets.view_more": "View more"),
+    //     "facets.view_less": "View less"),
+    //     "facets.view_all": "View all"),
+    //     "NoHits.NoResultsFound": "No results found for {query}"),
+    //     "NoHits.DidYouMean": "Search for {suggestion}."),
+    //     "NoHits.SearchWithoutFilters": "Search for {query} without filters"),
+    //     "NoHits.NoResultsFoundDidYouMean": "No results found for {query}. Did you mean {suggestion}?"),
+    //     "hitstats.results_found": "{hitCount} results found in {timeTaken} ms"),
+    //   };
+    //   return translations[key];
+    // };
+
+      // inject a bounds query
+      // this.searchkit.setQueryProcessor(plainQueryObject => {
+        
+
+        // const bounds = this.map.getBounds();
+        // if (bounds) {
+        //   const clampGeo = ([lat, lng]) => {
+        //     return [
+        //       Math.min(Math.max(lat, -90), 90),
+        //       Math.min(Math.max(lng, -180), 180)
+        //     ];
+        //   };
+  
+          // const newQuery = { "aggs": { "duplicateCount": { "terms": { "field": "title_field", "min_doc_count": 2 }, "aggs": { "duplicateDocuments": { "top_hits": {} } } } } }
+        //     bool: {
+        //       must: { match_all: {} },
+        //       filter: {
+        //         geo_bounding_box: {
+        //           type: "indexed",
+        //           location: {
+        //             top_left: clampGeo(bounds.getNorthWest().toArray()),
+        //             bottom_right: clampGeo(bounds.getSouthEast().toArray())
+        //           }
+        //         }
+        //       }
+        //     }
+        //   };
+      //     plainQueryObject.aggs = {
+      //       "duplicateCount": {
+      //         "terms": {
+      //           "field": "field_date_type",
+      //           "min_doc_count": 2
+      //         },
+      //         "aggs": {
+      //           "duplicateDocuments": {
+      //             "top_hits": {
+      //             "size": 1
+      //             }
+      //           }
+      //         }
+      //       } 
+      //     }
+      //     // plainQueryObject.query = { "query" : { "match_all": {} } };
+      //     // plainQueryObject.size = 1;
+      //   // }
+      //   console.log("query object", plainQueryObject);
+      //   return plainQueryObject;
+      // });
   }
 
   render() {
@@ -137,67 +188,41 @@ export class KadaSearch extends React.Component<any, any> {
                   id='keyword'
                 />
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("What")}>
 
-                  <HierarchicalRefinementFilter
-                    id="hobby_types"
-                    title={null}
-                    field="field_hobby_category"
-                    orderKey="field_hobby_category.level"
-                  />
 
-                </Panel>
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
-
-                  <RefinementListFilter
-                    id="district"
-                    title={window.Drupal.t("Select a city district")}
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={100}
-                  />
-
-                </Panel>
 
                 <RefinementWithText
                   id="target_audience"
-                  title={window.Drupal.t("For whom")}
+                  title={"For whom"}
                   field="field_target_audience"
                   operator="OR"
                   listComponent={ItemHistogramList}
-                  description={window.Drupal.t("Select one or many")}
+                  description={"Select one or many"}
                 />
 
                 <Panel
                   collapsable={true}
                   defaultCollapsed={true}
-                  title={window.Drupal.t("When")}>
+                  title={"When"}>
 
                   <HierarchicalRefinementFilter
                     id="weekday"
-                    title={window.Drupal.t("Weekday")}
+                    title={"Weekday"}
                     field="field_event_date_weekday"
                     orderKey="field_event_date_weekday.order"
                   />
 
                   <HierarchicalRefinementFilter
                     id="timeofday"
-                    title={window.Drupal.t("Time of day")}
+                    title={"Time of day"}
                     field="field_event_date_timeofday"
                     orderKey="field_event_date_timeofday.order"
                   />
 
                   <DateRangeFilter
                     id="field_event_date"
-                    title={window.Drupal.t("Dates")}
+                    title={"Dates"}
                     fromDateField="field_event_date.from"
                     toDateField="field_event_date.to"
                     calendarComponent={DateRangeCalendar}
@@ -213,7 +238,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementListFilter
                   id="hobby_details"
-                  title={window.Drupal.t("Fine down search")}
+                  title={"Fine down search"}
                   field="hobby_details"
                   operator="AND"
                   containerComponent={CollapsedPanel}
@@ -286,7 +311,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <DateRangeFilter
                   id="field_event_date"
-                  title={window.Drupal.t("When")}
+                  title={"When"}
                   fromDateField="field_event_date.from"
                   toDateField="field_event_date.to"
                   calendarComponent={DateRangeCalendar}
@@ -302,7 +327,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementListFilter
                   id="event_types"
-                  title={window.Drupal.t("What")}
+                  title={"What"}
                   field="field_event_types"
                   operator="AND"
                   size={5}
@@ -312,32 +337,18 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementWithText
                   id="target_audience"
-                  title={window.Drupal.t("For whom")}
+                  title={"For whom"}
                   field="field_target_audience"
                   operator="OR"
                   listComponent={ItemHistogramList}
-                  description={window.Drupal.t("Select one or many")}
+                  description={"Select one or many"}
                 />
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
 
-                  <RefinementListFilter
-                    id="district"
-                    title={window.Drupal.t("Write or search from dropdown")}
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={100}
-                  />
-
-                </Panel>
 
                 <RefinementListFilter
                   id="hobby_details"
-                  title={window.Drupal.t("Fine down search")}
+                  title={"Fine down search"}
                   field="hobby_details"
                   operator="AND"
                   containerComponent={CollapsedPanel}
@@ -393,3 +404,5 @@ export class KadaSearch extends React.Component<any, any> {
     }
   }
 }
+
+export default KadaSearch

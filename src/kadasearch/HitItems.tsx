@@ -72,7 +72,7 @@ const EventListItem = (props) => {
     </div>
   ) : null;
 
-  const signupBeforeLabel = window.Drupal.t("Last day to sign up");
+  const signupBeforeLabel = "Last day to sign up";
   const signupBefore = (source.field_last_day_to_sign_up_pretty) ? (
     <div className="event__signup">
       <div className="label-inline signup__label">
@@ -92,20 +92,20 @@ const EventListItem = (props) => {
       const percentage = 0;
       let color = '';
       let text = '';
-      const prefix = window.Drupal.t("Estimate of ticket availability: ");
+      const prefix = "Estimate of ticket availability: ";
 
       // Sanity check.
       if (totalTickets && availableTickets && totalTickets >= availableTickets) {
         const percentage = ((availableTickets / totalTickets) * 100)
         if (percentage <= 5) {
           color = 'red';
-          text = window.Drupal.t('Almost sold out');
+          text = 'Almost sold out';
         } else if (percentage > 5 && percentage <= 30) {
           color = 'orange';
-          text = window.Drupal.t('Few tickets available');
+          text = 'Few tickets available';
         } else {
           color = 'green';
-          text = window.Drupal.t('Tickets available');
+          text = 'Tickets available';
         }
 
         const className = `traffic-light-${color}`
@@ -157,7 +157,7 @@ const EventListItem = (props) => {
   :
   (
     <div className="event event--list">
-      <i>{ window.Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>
+      <i>{ "We were unable to display event id. Sorry!" }</i>
     </div>
   );
 };

@@ -1,24 +1,24 @@
-import * as ReactDOM from "react-dom";
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { KadaSearch } from "./kadasearch/kadasearch";
-import DrupalSettings from "./DrupalSettings";
-import { Router, Route, IndexRoute } from "react-router";
+//import DrupalSettings from "./DrupalSettings";
+import { BrowserRouter } from 'react-router-dom'
 import { HitsScrollingPatch } from "./kadasearch/HitsScrollingPatch";
 
-const createBrowserHistory = require("history/lib/createBrowserHistory")
+import createHistory from 'history/createBrowserHistory';
 
-let rootElemId = "kada-event-search";
 
-if (DrupalSettings.settings.noDrupal) {
-  rootElemId = "root";
-}
+
+const rootElemId = "root";
+
+// if (DrupalSettings.settings.noDrupal) {
+//   rootElemId = "root";
+// }
 
 HitsScrollingPatch()
 
 ReactDOM.render((
-  <Router history={createBrowserHistory()}>
-    <Route component={KadaSearch} path="/"/>
-    <Route component={KadaSearch} path="*"/>
-    <Route component={KadaSearch} path="kadasearch"/>
-  </Router>
+  <BrowserRouter>
+    <KadaSearch />
+  </BrowserRouter>
 ), document.getElementById(rootElemId));

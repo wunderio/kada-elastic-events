@@ -2,7 +2,7 @@ import * as React from "react";
 import * as moment from "moment";
 import 'rc-calendar/assets/index.css';
 
-import Drupal from "../DrupalSettings.tsx";
+import Drupal from "../DrupalSettings";
 
 declare var window;
 
@@ -147,8 +147,8 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
     const state = this.state;
     const { fromDate, toDate, fromDateValue, toDateValue } = this.props
 
-    const fromLabel = window.Drupal.t("From date");
-    const toLabel = window.Drupal.t("To date");
+    const fromLabel = "From date";
+    const toLabel = "To date";
 
     return (
       <div>

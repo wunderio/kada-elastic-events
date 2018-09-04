@@ -20,7 +20,7 @@ import { DateRangeQuery } from "../query/DateRangeQuery";
 import { createEventSortQuery } from '../EventSorting'
 
 
-export interface DateRangeAccessorOptions {
+export interface IDateRangeAccessorOptions {
   title:string
   id:string
   fromDate:moment.Moment
@@ -35,12 +35,12 @@ export interface DateRangeAccessorOptions {
 }
 
 export class DateRangeAccessor extends FilterBasedAccessor<ObjectState> {
-  options:DateRangeAccessorOptions
+  options:IDateRangeAccessorOptions
   state = new ObjectState({})
   fieldContext:FieldContext
   rangeFormatter:(count:number)=> number | string
 
-  constructor(key, options:DateRangeAccessorOptions){
+  constructor(key, options:IDateRangeAccessorOptions){
     super(key, options.id)
     this.options = options
     this.options.fieldOptions = this.options.fieldOptions || { type:"embedded" }
