@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
 import { EventListItem } from "./HitItems";
+import Drupal from "../DrupalSettings";
 
 import "./styles.css";
 
@@ -75,9 +76,9 @@ const eventsQueryFields = [
 // https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
 
 
-let SearchServer = 'http://dt-demo.turku.fi';
-let SearchCalendar = 'events';
-let SearchLanguage = 'fi';
+let SearchServer = Drupal.settings.elasticServer;
+let SearchCalendar = Drupal.settings.currentCalendar;
+let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 
@@ -94,6 +95,8 @@ export class KadaSearch extends React.Component<any, any> {
       useHistory: true,
     });
 
+
+    
     // Attach translations to Drupal
     // this.searchkit.translateFunction = (key) => {
     //   let translations = {
@@ -111,60 +114,28 @@ export class KadaSearch extends React.Component<any, any> {
     //     "hitstats.results_found": "{hitCount} results found in {timeTaken} ms"),
     //   };
     //   return translations[key];
-    // };
-
-      // inject a bounds query
-      // this.searchkit.setQueryProcessor(plainQueryObject => {
-        
-
-        // const bounds = this.map.getBounds();
-        // if (bounds) {
-        //   const clampGeo = ([lat, lng]) => {
-        //     return [
-        //       Math.min(Math.max(lat, -90), 90),
-        //       Math.min(Math.max(lng, -180), 180)
-        //     ];
-        //   };
-  
-          // const newQuery = { "aggs": { "duplicateCount": { "terms": { "field": "title_field", "min_doc_count": 2 }, "aggs": { "duplicateDocuments": { "top_hits": {} } } } } }
-        //     bool: {
-        //       must: { match_all: {} },
-        //       filter: {
-        //         geo_bounding_box: {
-        //           type: "indexed",
-        //           location: {
-        //             top_left: clampGeo(bounds.getNorthWest().toArray()),
-        //             bottom_right: clampGeo(bounds.getSouthEast().toArray())
-        //           }
-        //         }
-        //       }
-        //     }
-        //   };
-      //     plainQueryObject.aggs = {
-      //       "duplicateCount": {
-      //         "terms": {
-      //           "field": "field_date_type",
-      //           "min_doc_count": 2
-      //         },
-      //         "aggs": {
-      //           "duplicateDocuments": {
-      //             "top_hits": {
-      //             "size": 1
-      //             }
-      //           }
-      //         }
-      //       } 
-      //     }
-      //     // plainQueryObject.query = { "query" : { "match_all": {} } };
-      //     // plainQueryObject.size = 1;
-      //   // }
-      //   console.log("query object", plainQueryObject);
-      //   return plainQueryObject;
-      // });
+    // }; 
+      
   }
+
+  
 
   render() {
     if (SearchCalendar == 'hobbies') {
+
+      // collapse multi events
+      this.searchkit.setQueryProcessor((plainQueryObject)=>{
+        plainQueryObject.collapse = { 
+          "field" : "super_id",
+          "inner_hits": {
+            "name": "latest", 
+            "sort": [{ "field_event_date_from_millis": "asc" }] 
+          } 
+        };
+        console.log("query object", plainQueryObject);
+        return plainQueryObject;
+      })
+            
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <Layout size="l">
@@ -328,8 +299,6 @@ export class KadaSearch extends React.Component<any, any> {
                   listComponent={ItemHistogramList}
                   description={"Select one or many"}
                 />
-
-
 
                 <RefinementListFilter
                   id="hobby_details"
