@@ -87,11 +87,10 @@ let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
 
-  constructor() {
-    super(null);
+  constructor(props) {
+    super(props);
     // new searchkit Manager connecting to ES server
-    const host = SearchServerURL;
-    this.searchkit = new SearchkitManager(host, {
+    this.searchkit = new SearchkitManager(SearchServerURL, {
       useHistory: true,
     });
 
@@ -118,8 +117,6 @@ export class KadaSearch extends React.Component<any, any> {
       
   }
 
-  
-
   render() {
     if (SearchCalendar == 'hobbies') {
 
@@ -132,7 +129,6 @@ export class KadaSearch extends React.Component<any, any> {
             "sort": [{ "field_event_date_from_millis": "asc" }] 
           } 
         };
-        console.log("query object", plainQueryObject);
         return plainQueryObject;
       })
             
