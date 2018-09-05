@@ -77,7 +77,7 @@ const eventsQueryFields = [
 
 
 let SearchServer = Drupal.settings.elasticServer;
-let SearchCalendar = Drupal.settings.currentCalendar;
+let SearchCalendar = 'hobbies';
 let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
@@ -129,9 +129,19 @@ export class KadaSearch extends React.Component<any, any> {
             "sort": [{ "field_event_date_from_millis": "asc" }] 
           } 
         };
-        return plainQueryObject;
-      })
-            
+
+        // count hits after collapsing
+        plainQueryObject.aggs = {
+            "total_hits" : {
+              "cardinality" : {
+                "field" : "super_id",
+              }
+            }
+        };
+
+          return plainQueryObject;
+      });
+
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <Layout size="l">
