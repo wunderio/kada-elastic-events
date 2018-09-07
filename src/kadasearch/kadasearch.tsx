@@ -77,7 +77,7 @@ const eventsQueryFields = [
 
 
 let SearchServer = Drupal.settings.elasticServer;
-let SearchCalendar = 'hobbies';
+let SearchCalendar = Drupal.settings.currentCalendar;
 let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
@@ -97,23 +97,23 @@ export class KadaSearch extends React.Component<any, any> {
 
     
     // Attach translations to Drupal
-    // this.searchkit.translateFunction = (key) => {
-    //   let translations = {
-    //     "searchbox.placeholder": "Search"),
-    //     "pagination.previous": "Previous"),
-    //     "pagination.next": "Next"),
-    //     "reset.clear_all": "Clear all filters"),
-    //     "facets.view_more": "View more"),
-    //     "facets.view_less": "View less"),
-    //     "facets.view_all": "View all"),
-    //     "NoHits.NoResultsFound": "No results found for {query}"),
-    //     "NoHits.DidYouMean": "Search for {suggestion}."),
-    //     "NoHits.SearchWithoutFilters": "Search for {query} without filters"),
-    //     "NoHits.NoResultsFoundDidYouMean": "No results found for {query}. Did you mean {suggestion}?"),
-    //     "hitstats.results_found": "{hitCount} results found in {timeTaken} ms"),
-    //   };
-    //   return translations[key];
-    // }; 
+    this.searchkit.translateFunction = (key) => {
+      const translations = {
+        "searchbox.placeholder": "Search",
+        "pagination.previous": "Previous",
+        "pagination.next": "Next",
+        "reset.clear_all": "Clear all filters",
+        "facets.view_more": "View more",
+        "facets.view_less": "View less",
+        "facets.view_all": "View all",
+        "NoHits.NoResultsFound": "No results found for {query}",
+        "NoHits.DidYouMean": "Search for {suggestion}.",
+        "NoHits.SearchWithoutFilters": "Search for {query} without filters",
+        "NoHits.NoResultsFoundDidYouMean": "No results found for {query}. Did you mean {suggestion}?",
+        "hitstats.results_found": "{hitCount} results found in {timeTaken} ms",
+      };
+      return translations[key];
+    };
       
   }
 
@@ -158,35 +158,35 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementWithText
                   id="target_audience"
-                  title={"For whom"}
+                  title={window.Drupal.t("For whom")}
                   field="field_target_audience"
                   operator="OR"
                   listComponent={ItemHistogramList}
-                  description={"Select one or many"}
+                  description={window.Drupal.t("Select one or many")}
                 />
 
                 <Panel
                   collapsable={true}
                   defaultCollapsed={true}
-                  title={"When"}>
+                  title={window.Drupal.t("When")}>
 
                   <HierarchicalRefinementFilter
                     id="weekday"
-                    title={"Weekday"}
+                    title={window.Drupal.t("Weekday")}
                     field="field_event_date_weekday"
                     orderKey="field_event_date_weekday.order"
                   />
 
                   <HierarchicalRefinementFilter
                     id="timeofday"
-                    title={"Time of day"}
+                    title={window.Drupal.t("Time of day")}
                     field="field_event_date_timeofday"
                     orderKey="field_event_date_timeofday.order"
                   />
 
                   <DateRangeFilter
                     id="field_event_date"
-                    title={"Dates"}
+                    title={window.Drupal.t("Dates")}
                     fromDateField="field_event_date.from"
                     toDateField="field_event_date.to"
                     calendarComponent={DateRangeCalendar}
@@ -202,7 +202,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementListFilter
                   id="hobby_details"
-                  title={"Fine down search"}
+                  title={window.Drupal.t("Fine down search")}
                   field="hobby_details"
                   operator="AND"
                   containerComponent={CollapsedPanel}
@@ -273,7 +273,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <DateRangeFilter
                   id="field_event_date"
-                  title={"When"}
+                  title={window.Drupal.t("When")}
                   fromDateField="field_event_date.from"
                   toDateField="field_event_date.to"
                   calendarComponent={DateRangeCalendar}
@@ -289,7 +289,7 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementListFilter
                   id="event_types"
-                  title={"What"}
+                  title={window.Drupal.t("What")}
                   field="field_event_types"
                   operator="AND"
                   size={5}
@@ -299,16 +299,16 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <RefinementWithText
                   id="target_audience"
-                  title={"For whom"}
+                  title={window.Drupal.t("For whom")}
                   field="field_target_audience"
                   operator="OR"
                   listComponent={ItemHistogramList}
-                  description={"Select one or many"}
+                  description={window.Drupal.t("Select one or many")}
                 />
 
                 <RefinementListFilter
                   id="hobby_details"
-                  title={"Fine down search"}
+                  title={window.Drupal.t("Fine down search")}
                   field="hobby_details"
                   operator="AND"
                   containerComponent={CollapsedPanel}

@@ -147,8 +147,8 @@ export class DateRangeCalendar extends SearchkitComponent<any, any> {
     const state = this.state;
     const { fromDate, toDate, fromDateValue, toDateValue } = this.props
 
-    const fromLabel = "From date";
-    const toLabel = "To date";
+    const fromLabel = window.Drupal.t("From date");
+    const toLabel = window.Drupal.t("To date");
 
     return (
       <div>
