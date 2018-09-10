@@ -131,12 +131,10 @@ export class KadaSearch extends React.Component<any, any> {
         };
 
         // count hits after collapsing
-        plainQueryObject.aggs = {
-            "total_hits" : {
-              "cardinality" : {
-                "field" : "super_id",
-              }
-            }
+        plainQueryObject.aggs["total_hits"] = {
+          "cardinality" : {
+            "field" : "super_id",
+          }
         };
 
           return plainQueryObject;
