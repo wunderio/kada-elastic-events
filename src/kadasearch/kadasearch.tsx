@@ -148,7 +148,6 @@ export class KadaSearch extends React.Component<any, any> {
           ]
         }
      
-        console.log(plainQueryObject);
         return plainQueryObject;
       });
 
