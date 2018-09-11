@@ -8,24 +8,11 @@ import {
 
 declare var window;
 
-const EventGridItem = (props) => {
-  const {bemBlocks, result} = props;
-  let url = "http://www.imdb.com/title/" + result._source.imdbId;
-  const source: any = extend({}, result._source, result.highlight);
-  return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <a href={url} target="_blank">
-        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.field_content_image_et_url} width="170" height="240"/>
-        <div data-qa="title_field.original" className={bemBlocks.item("title_field.original")} dangerouslySetInnerHTML={{__html:source.title_field.original}}>
-        </div>
-      </a>
-    </div>
-  );
-};
-
 const EventListItem = (props) => {
   const {bemBlocks, result} = props;
-  const source: any = extend({}, result._source, result.highlight);
+  const source: any = extend({}, result.inner_hits.latest.hits.hits['0']._source, result.highlight);
+
+  console.log(result);
 
   // If there's an url in the index, use it. Otherwise, fall back to Drupal node-id.
   const url = (source.url) ? source.url : '/node/' + result._id
@@ -160,4 +147,4 @@ const EventListItem = (props) => {
   );
 };
 
-export { EventGridItem, EventListItem }
+export { EventListItem }

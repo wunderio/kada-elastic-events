@@ -29,7 +29,7 @@ import {
   QueryString,
   TermQuery,
   FilteredQuery,
-  BoolShould  
+  BoolShould
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
@@ -75,6 +75,11 @@ const eventsQueryFields = [
 // Available query options:
 // https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
 
+const queryOptions = {
+  fuzziness: 0,
+  phrase_slop: 2,
+  default_operator: 'AND',
+}
 
 let SearchServer = Drupal.settings.elasticServer;
 let SearchCalendar = Drupal.settings.currentCalendar;
@@ -93,8 +98,6 @@ export class KadaSearch extends React.Component<any, any> {
     this.searchkit = new SearchkitManager(SearchServerURL, {
       useHistory: true,
     });
-
-
     
     // Attach translations to Drupal
     this.searchkit.translateFunction = (key) => {
@@ -122,10 +125,11 @@ export class KadaSearch extends React.Component<any, any> {
 
       // collapse multi events
       this.searchkit.setQueryProcessor((plainQueryObject)=>{
-        plainQueryObject.collapse = { 
+        plainQueryObject.collapse = {
           "field" : "super_id",
           "inner_hits": {
             "name": "latest", 
+            "size": 1,
             "sort": [{ "field_event_date_from_millis": "asc" }] 
           } 
         };
@@ -137,7 +141,15 @@ export class KadaSearch extends React.Component<any, any> {
           }
         };
 
-          return plainQueryObject;
+        // exclude unneccasary fields
+        plainQueryObject["_source"] = {
+          "includes": [
+            "title_field",
+          ]
+        }
+     
+        console.log(plainQueryObject);
+        return plainQueryObject;
       });
 
       return (
@@ -151,6 +163,7 @@ export class KadaSearch extends React.Component<any, any> {
                   queryFields={hobbiesQueryFields}
                   prefixQueryFields={hobbiesQueryFields}
                   queryBuilder={QueryString}
+                  queryOptions={queryOptions}
                   id='keyword'
                 />
 
@@ -267,6 +280,7 @@ export class KadaSearch extends React.Component<any, any> {
                   prefixQueryFields={eventsQueryFields}
                   queryBuilder={QueryString}
                   id='keyword'
+                  queryOptions={queryOptions}             
                 />
 
                 <DateRangeFilter
