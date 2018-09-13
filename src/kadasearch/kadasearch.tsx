@@ -82,7 +82,7 @@ const queryOptions = {
 }
 
 let SearchServer = Drupal.settings.elasticServer;
-let SearchCalendar = Drupal.settings.currentCalendar;
+let SearchCalendar = 'hobbies';
 let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
