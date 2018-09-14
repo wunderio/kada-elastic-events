@@ -1,0 +1,22 @@
+def parser = new DateMathParser(Joda.forPattern("dateTime"));
+def now = (long) parser.parse(
+  queryNow,
+  { return DateTime.now().getMillis() } as Callable<Long>
+);
+
+long eventLength = Math.max(doc['field_event_date_length'].value, 60000L);
+long eventElapsed = (doc['field_last_day_to_sign_up_millis'].value) ? now - doc['field_last_day_to_sign_up_millis'].value : now - doc['field_event_date_from_millis'].value;
+
+
+
+
+long wToday = (eventElapsed > -64800000L && eventElapsed < 0L) ? (64800000L+eventElapsed)/3000L : 0L;
+double wLength = 1000000000L/eventLength;
+double wElapsed = eventElapsed/eventLength;
+
+float startedWeight = (float) Math.log(wToday + wLength + wElapsed);
+float pendingWeight = (float) Math.log(wToday + -200000000L/eventElapsed);
+
+float weightValue = (eventElapsed > 0L) ? startedWeight : pendingWeight;
+
+return weightValue;

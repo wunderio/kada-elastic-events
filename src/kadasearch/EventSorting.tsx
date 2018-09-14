@@ -6,7 +6,7 @@ export const createEventSortQuery = (now:moment.Moment = moment()) => {
   return {
     "_script": {
       "script": {
-        "lang": "groovy",
+        "lang": "painless",
         "file": "weightedEventSort",
         "params": {
           "queryNow": now.toISOString()

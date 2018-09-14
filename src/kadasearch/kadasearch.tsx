@@ -5,8 +5,6 @@ import Drupal from "../DrupalSettings";
 
 import "./styles.css";
 
-import { DateRangeFilter, DateRangeCalendar } from "searchkit-datefilter"
-
 declare var window;
 
 import {
@@ -34,6 +32,8 @@ import {
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
+import { DateRangeFilter } from './DateRangeFilter'
+import { DateRangeCalendar } from './DateRangeCalendar'
 import { DateRangeQuery } from "./query/DateRangeQuery";
 
 // import "./styles/theme.scss";
