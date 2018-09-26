@@ -82,7 +82,7 @@ const queryOptions = {
 }
 
 let SearchServer = Drupal.settings.elasticServer;
-let SearchCalendar = 'hobbies';
+let SearchCalendar = Drupal.settings.currentCalendar;
 let SearchLanguage = Drupal.settings.language;
 let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
@@ -122,34 +122,6 @@ export class KadaSearch extends React.Component<any, any> {
 
   render() {
     if (SearchCalendar == 'hobbies') {
-
-      // collapse multi events
-      this.searchkit.setQueryProcessor((plainQueryObject)=>{
-        plainQueryObject.collapse = {
-          "field" : "super_id",
-          "inner_hits": {
-            "name": "latest", 
-            "size": 1,
-            "sort": [{ "field_event_date_from_millis": "asc" }] 
-          } 
-        };
-
-        // count hits after collapsing
-        plainQueryObject.aggs["total_hits"] = {
-          "cardinality" : {
-            "field" : "super_id",
-          }
-        };
-
-        // exclude unneccasary fields
-        plainQueryObject["_source"] = {
-          "includes": [
-            "title_field",
-          ]
-        }
-     
-        return plainQueryObject;
-      });
 
       return (
         <SearchkitProvider searchkit={this.searchkit}>

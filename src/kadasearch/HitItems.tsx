@@ -10,8 +10,8 @@ declare var window;
 
 const EventListItem = (props) => {
   const {bemBlocks, result} = props;
-  const source: any = extend({}, result.inner_hits.latest.hits.hits['0']._source, result.highlight);
-
+  const source: any = extend({}, result._source, result.highlight);
+  
   // If there's an url in the index, use it. Otherwise, fall back to Drupal node-id.
   const url = (source.url) ? source.url : '/node/' + result._id
   const image = (source.field_content_image_et_url) ? (

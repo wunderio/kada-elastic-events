@@ -2,18 +2,21 @@ import * as React from "react"
 import * as moment from "moment"
 import { extend } from "lodash"
 
-export const createEventSortQuery = (now:moment.Moment = moment()) => {
+export const createEventSortQuery = (datefilter) => {
+  var dateFilterOn = datefilter ? true : false
+  var now = Date.now()
   return {
     "_script": {
       "script": {
-        "lang": "painless",
+        "lang": "groovy",
         "file": "weightedEventSort",
         "params": {
-          "queryNow": now.toISOString()
+          "queryNow": now,
+          "dateFilterOn": dateFilterOn
         },
       },
       "type": "number",
-      "order": "desc"
+      "order": "asc"
     }
   }
 }

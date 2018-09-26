@@ -15,12 +15,12 @@ import {
   ImmutableQuery
 } from "searchkit";
 
-import { DateRangeQuery } from "../query/DateRangeQuery";
+import { DateRangeQuery } from "../query/DateRangeQuery"
 
 import { createEventSortQuery } from '../EventSorting'
 
 
-export interface IDateRangeAccessorOptions {
+export interface DateRangeAccessorOptions {
   title:string
   id:string
   fromDate:moment.Moment
@@ -35,12 +35,12 @@ export interface IDateRangeAccessorOptions {
 }
 
 export class DateRangeAccessor extends FilterBasedAccessor<ObjectState> {
-  options:IDateRangeAccessorOptions
+  options:DateRangeAccessorOptions
   state = new ObjectState({})
   fieldContext:FieldContext
   rangeFormatter:(count:number)=> number | string
 
-  constructor(key, options:IDateRangeAccessorOptions){
+  constructor(key, options:DateRangeAccessorOptions){
     super(key, options.id)
     this.options = options
     this.options.fieldOptions = this.options.fieldOptions || { type:"embedded" }
