@@ -102,22 +102,21 @@ export class KadaSearch extends React.Component<any, any> {
     // Attach translations to Drupal
     this.searchkit.translateFunction = (key) => {
       const translations = {
-        "searchbox.placeholder": "Search",
-        "pagination.previous": "Previous",
-        "pagination.next": "Next",
-        "reset.clear_all": "Clear all filters",
-        "facets.view_more": "View more",
-        "facets.view_less": "View less",
-        "facets.view_all": "View all",
-        "NoHits.NoResultsFound": "No results found for {query}",
-        "NoHits.DidYouMean": "Search for {suggestion}.",
-        "NoHits.SearchWithoutFilters": "Search for {query} without filters",
-        "NoHits.NoResultsFoundDidYouMean": "No results found for {query}. Did you mean {suggestion}?",
-        "hitstats.results_found": "{hitCount} results found in {timeTaken} ms",
+        "searchbox.placeholder": window.Drupal.t("Search"),
+        "pagination.previous": window.Drupal.t("Previous"),
+        "pagination.next": window.Drupal.t("Next"),
+        "reset.clear_all": window.Drupal.t("Clear all filters"),
+        "facets.view_more": window.Drupal.t("View more"),
+        "facets.view_less": window.Drupal.t("View less"),
+        "facets.view_all": window.Drupal.t("View all"),
+        "NoHits.NoResultsFound": window.Drupal.t("No results found for {query}"),
+        "NoHits.DidYouMean": window.Drupal.t("Search for {suggestion}."),
+        "NoHits.SearchWithoutFilters": window.Drupal.t("Search for {query} without filters"),
+        "NoHits.NoResultsFoundDidYouMean": window.Drupal.t("No results found for {query}. Did you mean {suggestion}?"),
+        "hitstats.results_found": window.Drupal.t("{hitCount} results found in {timeTaken} ms"),
       };
       return translations[key];
     };
-      
   }
 
   render() {
