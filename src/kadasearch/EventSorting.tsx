@@ -16,7 +16,7 @@ export const createEventSortQuery = (datefilter) => {
         },
       },
       "type": "number",
-      "order": "asc"
+      "order": "desc"
     }
   }
 }
