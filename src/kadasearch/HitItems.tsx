@@ -1,6 +1,7 @@
 import { extend } from "lodash";
 import * as React from "react";
 import Drupal from "../DrupalSettings";
+import ReactHtmlParser from 'react-html-parser';
 
 import {
   TagFilterList
@@ -29,7 +30,7 @@ const EventListItem = (props) => {
   const externalPlace = (source.field_external_place_event) ? (
     <div className="event__place external">
       <ul className="links">
-        <li>{source.field_external_place_event}</li>
+        <li>{ReactHtmlParser(source.field_external_place_event)}</li>
       </ul>
     </div>
   ) : null;
