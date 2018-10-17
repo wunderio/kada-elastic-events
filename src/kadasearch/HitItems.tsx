@@ -52,7 +52,7 @@ const EventListItem = (props) => {
   ) : null;
 
   const excludedDays = (source.excluded_days == 1) ? (
-    <div className="excluded__days"><a href={url + '#quicktabs-series_events'}>Katso poikkeusaukioloajat</a></div>
+    <div className="excluded__days"><a href={url + '#excluded-dates'}>Katso poikkeusaukioloajat</a></div>
   ) : null;
 
   const prettyDates = (source.field_event_date_pretty) ? (
