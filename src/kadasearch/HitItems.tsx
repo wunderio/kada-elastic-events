@@ -51,6 +51,10 @@ const EventListItem = (props) => {
     <div className="date__vignette">{source.field_date_vignette}</div>
   ) : null;
 
+  const excludedDays = (source.excluded_days == 1) ? (
+    <div className="excluded__days"><a href={url + '#quicktabs-series_events'}>Katso poikkeusaukioloajat</a></div>
+  ) : null;
+
   const prettyDates = (source.field_event_date_pretty) ? (
     <div className="event__date">
       {source.field_event_date_pretty}
@@ -127,6 +131,7 @@ const EventListItem = (props) => {
         {externalPlace}
         {prettyDates}
         {superDates}
+        {excludedDays}
         {signupBefore}
         <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
         {ticketsLink}
