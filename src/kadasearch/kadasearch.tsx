@@ -35,6 +35,7 @@ import RefinementWithText from './RefinementWithText'
 import { DateRangeFilter } from './DateRangeFilter'
 import { DateRangeCalendar } from './DateRangeCalendar'
 import { DateRangeQuery } from "./query/DateRangeQuery";
+import MultiSelect from "searchkit-multiselect"
 
 // import "./styles/theme.scss";
 
@@ -136,6 +137,31 @@ export class KadaSearch extends React.Component<any, any> {
                   queryOptions={queryOptions}
                   id='keyword'
                 />
+
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("What")}>
+                   <HierarchicalRefinementFilter
+                    id="hobby_types"
+                    title={null}
+                    field="field_hobby_category"
+                    orderKey="field_hobby_category.level"
+                  />
+                 </Panel>
+                 <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("Where")}>
+                   <RefinementListFilter
+                    id="district"
+                    title={window.Drupal.t("Select a city district")}
+                    field="field_district"
+                    operator="OR"
+                    listComponent={MultiSelect}
+                    size={100}
+                  />
+                 </Panel>
 
                 <RefinementWithText
                   id="target_audience"
@@ -287,6 +313,20 @@ export class KadaSearch extends React.Component<any, any> {
                   listComponent={ItemHistogramList}
                   description={window.Drupal.t("Select one or many")}
                 />
+
+                <Panel
+                  collapsable={true}
+                  defaultCollapsed={true}
+                  title={window.Drupal.t("Where")}>
+                   <RefinementListFilter
+                    id="district"
+                    title={window.Drupal.t("Write or search from dropdown")}
+                    field="field_district"
+                    operator="OR"
+                    listComponent={MultiSelect}
+                    size={100}
+                  />
+                 </Panel>
 
                 <RefinementListFilter
                   id="hobby_details"
