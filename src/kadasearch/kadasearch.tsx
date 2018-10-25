@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
+import { MultiSelect } from "searchkit-multiselect";
 import { EventListItem } from "./HitItems";
 import Drupal from "../DrupalSettings";
 
@@ -34,8 +35,7 @@ import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
 import { DateRangeFilter } from './DateRangeFilter'
 import { DateRangeCalendar } from './DateRangeCalendar'
-import { DateRangeQuery } from "./query/DateRangeQuery";
-import MultiSelect from "searchkit-multiselect"
+import { DateRangeQuery } from "./query/DateRangeQuery"
 
 // import "./styles/theme.scss";
 
