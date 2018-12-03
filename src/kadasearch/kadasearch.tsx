@@ -144,25 +144,21 @@ export class KadaSearch extends React.Component<any, any> {
                   title={window.Drupal.t("What")}>
                   <HierarchicalRefinementFilter
                     id="hobby_types"
-                    title={null}
+                    title={window.Drupal.t("What")}
                     field="field_hobby_category"
                     orderKey="field_hobby_category.level"
                   />
                 </Panel>
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
-                  <RefinementListFilter
-                    id="district"
-                    title=''
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={5}
-                  />
-                </Panel>
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  listComponent={MultiSelect}
+                  containerComponent={<Panel collapsable={true} defaultCollapsed={false} />}
+                  size={5}
+                />
 
                 <RefinementWithText
                   id="target_audience"
@@ -315,19 +311,15 @@ export class KadaSearch extends React.Component<any, any> {
                   description={window.Drupal.t("Select one or many")}
                 />
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
-                  <RefinementListFilter
-                    id="district"
-                    title={window.Drupal.t("Write or search from dropdown")}
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={100}
-                  />
-                </Panel>
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  listComponent={MultiSelect}
+                  containerComponent={<Panel collapsable={true} defaultCollapsed={false} />}
+                  size={5}
+                />
 
                 <RefinementListFilter
                   id="hobby_details"
