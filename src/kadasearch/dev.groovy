@@ -5,7 +5,7 @@
 int datePriority = doc['date_priority'].value;
 long dateMillis = doc['field_event_date_from_millis'].value;
 long signMillis = doc['field_last_day_to_sign_up_millis'].value;
-long signORdate = (signMillis > queryNow) ? signMillis : dateMillis;
+long signORdate = (signMillis > now) ? signMillis : dateMillis;
 
 // let the algorithm magic begins
 long eventLength = Math.max(doc['field_event_date_length'].value, 60000L);

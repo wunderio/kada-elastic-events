@@ -5,14 +5,16 @@ import { extend } from "lodash"
 export const createEventSortQuery = (datefilter:moment.Moment = moment()) => {
   var formattedQueryDate = datefilter.format('x')
   var dateFilterOn = datefilter ? true : false
-  var now = dateFilterOn ? parseInt(formattedQueryDate) : Date.now()
+  var now = Date.now()
+  var queryNow = dateFilterOn ? parseInt(formattedQueryDate) : Date.now()
   return {
     "_script": {
       "script": {
         "lang": "groovy",
         "file": "weightedEventSort",
         "params": {
-          "queryNow": now,
+          "queryNow": queryNow,
+          "now": now,
           "dateFilterOn": dateFilterOn
         },
       },
