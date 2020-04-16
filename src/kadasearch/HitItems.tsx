@@ -1,6 +1,7 @@
 import { extend } from "lodash";
 import * as React from "react";
 import Drupal from "../DrupalSettings";
+import ReactHtmlParser from 'react-html-parser';
 
 import {
   TagFilterList
@@ -8,25 +9,10 @@ import {
 
 declare var window;
 
-const EventGridItem = (props) => {
-  const {bemBlocks, result} = props;
-  let url = "http://www.imdb.com/title/" + result._source.imdbId;
-  const source: any = extend({}, result._source, result.highlight);
-  return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <a href={url} target="_blank">
-        <img data-qa="poster" className={bemBlocks.item("poster")} src={result._source.field_content_image_et_url} width="170" height="240"/>
-        <div data-qa="title_field.original" className={bemBlocks.item("title_field.original")} dangerouslySetInnerHTML={{__html:source.title_field.original}}>
-        </div>
-      </a>
-    </div>
-  );
-};
-
 const EventListItem = (props) => {
   const {bemBlocks, result} = props;
   const source: any = extend({}, result._source, result.highlight);
-
+  
   // If there's an url in the index, use it. Otherwise, fall back to Drupal node-id.
   const url = (source.url) ? source.url : '/node/' + result._id
   const image = (source.field_content_image_et_url) ? (
@@ -41,10 +27,10 @@ const EventListItem = (props) => {
     <div className="event__superdate"><a href={url + '#quicktabs-series_events'}>Tapahtumasarja ({source.series_dates_to_event})</a></div>
   ) : null;
 
-  const externalPlace = (source.series_dates_to_event) ? (
-    <div className="event__place">
+  const externalPlace = (source.field_external_place_event) ? (
+    <div className="event__place external">
       <ul className="links">
-        <li>{source.field_external_place_event}</li>
+        <li>{ReactHtmlParser(source.field_external_place_event)}</li>
       </ul>
     </div>
   ) : null;
@@ -63,6 +49,10 @@ const EventListItem = (props) => {
 
   const dateVignette = (source.field_date_vignette) ? (
     <div className="date__vignette">{source.field_date_vignette}</div>
+  ) : null;
+
+  const excludedDays = (source.excluded_days == 1) ? (
+    <div className="excluded__days"><a href={url + '#excluded-dates'}>Katso poikkeusaukioloajat</a></div>
   ) : null;
 
   const prettyDates = (source.field_event_date_pretty) ? (
@@ -89,10 +79,8 @@ const EventListItem = (props) => {
     if (ticketInformation) {
       const totalTickets = parseInt(ticketInformation[0]);
       const availableTickets = parseInt(ticketInformation[3]);
-      const percentage = 0;
       let color = '';
       let text = '';
-      const prefix = window.Drupal.t("Estimate of ticket availability: ");
 
       // Sanity check.
       if (totalTickets && availableTickets && totalTickets >= availableTickets) {
@@ -143,6 +131,7 @@ const EventListItem = (props) => {
         {externalPlace}
         {prettyDates}
         {superDates}
+        {excludedDays}
         {signupBefore}
         <div className="event__leading" dangerouslySetInnerHTML={{__html:leading}}></div>
         {ticketsLink}
@@ -157,9 +146,9 @@ const EventListItem = (props) => {
   :
   (
     <div className="event event--list">
-      <i>{ window.Drupal.t("We were unable to display event id @id. Sorry!", { "@id": result._id }) }</i>
+      <i>{ window.Drupal.t("We were unable to display event id. Sorry!") }</i>
     </div>
   );
 };
 
-export { EventGridItem, EventListItem }
+export { EventListItem }

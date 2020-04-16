@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
-
+import * as PropTypes from 'prop-types';
 
 import {
   SearchkitComponent,
@@ -68,18 +68,18 @@ export class DateRangeFilter extends SearchkitComponent<DateRangeFilterProps, an
 
 
   static propTypes = defaults({
-    fromDate:React.PropTypes.object,
-    toDate:React.PropTypes.object,
-    fromDateField:React.PropTypes.string.isRequired,
-    toDateField:React.PropTypes.string.isRequired,
-    title:React.PropTypes.string.isRequired,
-    id:React.PropTypes.string.isRequired,
+    fromDate:PropTypes.object,
+    toDate:PropTypes.object,
+    fromDateField:PropTypes.string.isRequired,
+    toDateField:PropTypes.string.isRequired,
+    title:PropTypes.string.isRequired,
+    id:PropTypes.string.isRequired,
     containerComponent:RenderComponentPropType,
     calendarComponent:RenderComponentPropType,
-    rangeFormatter:React.PropTypes.func,
-    fieldOptions:React.PropTypes.shape({
-      type:React.PropTypes.oneOf(["embedded", "nested", "children"]).isRequired,
-      options:React.PropTypes.object
+    rangeFormatter:PropTypes.func,
+    fieldOptions:PropTypes.shape({
+      type:PropTypes.oneOf(["embedded", "nested", "children"]).isRequired,
+      options:PropTypes.object
     }),
   }, SearchkitComponent.propTypes)
 

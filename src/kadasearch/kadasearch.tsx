@@ -1,9 +1,10 @@
 import * as React from "react";
 import * as moment from "moment";
+import { MultiSelect } from "searchkit-multiselect";
 import { EventListItem } from "./HitItems";
 import Drupal from "../DrupalSettings";
 
-var MultiSelect = require('searchkit-multiselect');
+import "./styles.css";
 
 declare var window;
 
@@ -24,16 +25,19 @@ import {
   SideBar,
   Panel,
   ActionBar, ActionBarRow,
-  QueryString
+  QueryString,
+  TermQuery,
+  FilteredQuery,
+  BoolShould
 } from "searchkit";
 
 import HierarchicalRefinementFilter from './HierarchicalRefinementFilter'
 import RefinementWithText from './RefinementWithText'
 import { DateRangeFilter } from './DateRangeFilter'
 import { DateRangeCalendar } from './DateRangeCalendar'
-import { DateRangeQuery } from "./query/DateRangeQuery";
+import { DateRangeQuery } from "./query/DateRangeQuery"
 
-import "./styles/theme.scss";
+// import "./styles/theme.scss";
 
 const CollapsablePanel = (<Panel collapsable={true} defaultCollapsed={false} />);
 const CollapsedPanel = (<Panel collapsable={true} defaultCollapsed={true} />);
@@ -71,14 +75,11 @@ const eventsQueryFields = [
 
 // Available query options:
 // https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
+
 const queryOptions = {
   fuzziness: 0,
   phrase_slop: 2,
   default_operator: 'AND',
-}
-const prefixQueryOptions = {
-  fuzziness: 0,
-  phrase_slop: 2,
 }
 
 let SearchServer = Drupal.settings.elasticServer;
@@ -88,20 +89,20 @@ let SearchIndex = SearchCalendar + '_' + SearchLanguage;
 let SearchServerURL = SearchServer.replace(/\/$/, '') + '/' + SearchIndex;
 
 
+
 export class KadaSearch extends React.Component<any, any> {
   searchkit: SearchkitManager;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // new searchkit Manager connecting to ES server
-    const host = SearchServerURL;
-    this.searchkit = new SearchkitManager(host, {
+    this.searchkit = new SearchkitManager(SearchServerURL, {
       useHistory: true,
     });
 
     // Attach translations to Drupal
     this.searchkit.translateFunction = (key) => {
-      let translations = {
+      const translations = {
         "searchbox.placeholder": window.Drupal.t("Search"),
         "pagination.previous": window.Drupal.t("Previous"),
         "pagination.next": window.Drupal.t("Next"),
@@ -121,6 +122,7 @@ export class KadaSearch extends React.Component<any, any> {
 
   render() {
     if (SearchCalendar == 'hobbies') {
+
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <Layout size="l">
@@ -131,9 +133,8 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={hobbiesQueryFields}
                   prefixQueryFields={hobbiesQueryFields}
-                  queryOptions={queryOptions}
-                  prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
+                  queryOptions={queryOptions}
                   id='keyword'
                 />
 
@@ -141,31 +142,23 @@ export class KadaSearch extends React.Component<any, any> {
                   collapsable={true}
                   defaultCollapsed={true}
                   title={window.Drupal.t("What")}>
-
                   <HierarchicalRefinementFilter
                     id="hobby_types"
-                    title={null}
+                    title={window.Drupal.t("What")}
                     field="field_hobby_category"
                     orderKey="field_hobby_category.level"
                   />
-
                 </Panel>
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
-
-                  <RefinementListFilter
-                    id="district"
-                    title={window.Drupal.t("Select a city district")}
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={100}
-                  />
-
-                </Panel>
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  listComponent={MultiSelect}
+                  containerComponent={<Panel collapsable={true} defaultCollapsed={false} />}
+                  size={5}
+                />
 
                 <RefinementWithText
                   id="target_audience"
@@ -207,7 +200,7 @@ export class KadaSearch extends React.Component<any, any> {
                         path: 'field_event_date'
                       }
                     }}
-                    rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                    rangeFormatter={(v) => moment(parseInt("" + v)).format('D.M.YYYY')}
                   />
                 </Panel>
 
@@ -226,11 +219,11 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <ActionBar>
                   <ActionBarRow>
-                    <GroupedSelectedFilters/>
-                    <ResetFilters/>
+                    <GroupedSelectedFilters />
+                    <ResetFilters />
                   </ActionBarRow>
                   <ActionBarRow>
-                    <HitsStats/>
+                    <HitsStats />
                   </ActionBarRow>
                 </ActionBar>
 
@@ -278,10 +271,9 @@ export class KadaSearch extends React.Component<any, any> {
                   searchOnChange={true}
                   queryFields={eventsQueryFields}
                   prefixQueryFields={eventsQueryFields}
-                  queryOptions={queryOptions}
-                  prefixQueryOptions={prefixQueryOptions}
                   queryBuilder={QueryString}
                   id='keyword'
+                  queryOptions={queryOptions}
                 />
 
                 <DateRangeFilter
@@ -297,7 +289,7 @@ export class KadaSearch extends React.Component<any, any> {
                       path: 'field_event_date'
                     }
                   }}
-                  rangeFormatter={(v) => moment(parseInt(""+v)).format('D.M.YYYY')}
+                  rangeFormatter={(v) => moment(parseInt("" + v)).format('D.M.YYYY')}
                 />
 
                 <RefinementListFilter
@@ -319,21 +311,15 @@ export class KadaSearch extends React.Component<any, any> {
                   description={window.Drupal.t("Select one or many")}
                 />
 
-                <Panel
-                  collapsable={true}
-                  defaultCollapsed={true}
-                  title={window.Drupal.t("Where")}>
-
-                  <RefinementListFilter
-                    id="district"
-                    title={window.Drupal.t("Write or search from dropdown")}
-                    field="field_district"
-                    operator="OR"
-                    listComponent={MultiSelect}
-                    size={100}
-                  />
-
-                </Panel>
+                <RefinementListFilter
+                  id="district"
+                  title={window.Drupal.t("Where")}
+                  field="field_district"
+                  operator="OR"
+                  listComponent={MultiSelect}
+                  containerComponent={<Panel collapsable={true} defaultCollapsed={false} />}
+                  size={5}
+                />
 
                 <RefinementListFilter
                   id="hobby_details"
@@ -350,11 +336,11 @@ export class KadaSearch extends React.Component<any, any> {
 
                 <ActionBar>
                   <ActionBarRow>
-                    <GroupedSelectedFilters/>
-                    <ResetFilters/>
+                    <GroupedSelectedFilters />
+                    <ResetFilters />
                   </ActionBarRow>
                   <ActionBarRow>
-                    <HitsStats/>
+                    <HitsStats />
                   </ActionBarRow>
                 </ActionBar>
 
@@ -393,3 +379,5 @@ export class KadaSearch extends React.Component<any, any> {
     }
   }
 }
+
+export default KadaSearch

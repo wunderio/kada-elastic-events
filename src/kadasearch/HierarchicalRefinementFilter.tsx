@@ -28,15 +28,7 @@ export default class HierarchicalRefinementFilter extends SearchkitComponent<Hie
     countFormatter:identity
   }
 
-  static propTypes = defaults({
-    field:React.PropTypes.string.isRequired,
-    id:React.PropTypes.string.isRequired,
-    title:React.PropTypes.string.isRequired,
-    orderKey:React.PropTypes.string,
-    orderDirection:React.PropTypes.oneOf(["asc", "desc"]),
-    startLevel:React.PropTypes.number,
-    countFormatter:React.PropTypes.func
-  }, SearchkitComponent.propTypes)
+
 
   defineBEMBlocks() {
     var blockClass = this.props.mod || "sk-hierarchical-refinement";

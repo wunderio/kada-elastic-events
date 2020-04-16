@@ -2,7 +2,7 @@ import * as React from "react";
 import * as moment from "moment";
 import 'rc-calendar/assets/index.css';
 
-import Drupal from "../DrupalSettings.tsx";
+import Drupal from "../DrupalSettings";
 
 declare var window;
 

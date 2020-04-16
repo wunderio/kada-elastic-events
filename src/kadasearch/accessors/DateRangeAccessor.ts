@@ -15,7 +15,7 @@ import {
   ImmutableQuery
 } from "searchkit";
 
-import { DateRangeQuery } from "../query/DateRangeQuery";
+import { DateRangeQuery } from "../query/DateRangeQuery"
 
 import { createEventSortQuery } from '../EventSorting'
 

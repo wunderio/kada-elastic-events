@@ -10,7 +10,7 @@ let DrupalSettings: any;
 // from Drupal.
 let checkPlain = (str) => {
   let character, regex,
-      replace = { '&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;' };
+  replace = { '&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;' };
   str = String(str);
   for (character in replace) {
     if (replace.hasOwnProperty(character)) {
@@ -30,7 +30,7 @@ if (typeof Drupal === "undefined") {
       language: 'fi',
      // currentCalendar: 'hobbies',
       currentCalendar: 'events',
-    }, require("../kada-config.js"))
+    }, require("./kada-config.js"))
   }
   window["Drupal"] = DrupalSettings;
   // Shim for the t() function so things can be translated in Drupal.
@@ -59,5 +59,7 @@ if (typeof Drupal === "undefined") {
 } else {
   DrupalSettings = Drupal;
 }
+
+DrupalSettings = Drupal;
 
 export default DrupalSettings;
