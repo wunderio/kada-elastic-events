@@ -1,0 +1,29 @@
+name: turku-kalenteri
+
+proxy:
+  node:
+    - turku-kalenteri.lndo.site:3000
+
+services:
+  node:
+    type: node:10
+    port: '3000'
+    build:
+      - yarn
+    command: yarn start --host 0.0.0.0 --port 3000
+
+tooling:
+  dev:
+    description: Runs `yarn start` as root with host & port options
+    cmd:
+      - node: yarn start --host 0.0.0.0 --port 3000
+    user: root
+  node:
+    service: node
+  npm:
+    service: node
+  yarn:
+    service: node
+
+# Tested with Lando version
+version: v3.0.0-rrc.2
