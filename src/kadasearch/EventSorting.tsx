@@ -10,8 +10,7 @@ export const createEventSortQuery = (datefilter:moment.Moment = moment()) => {
   return {
     "_script": {
       "script": {
-        "lang": "groovy",
-        "file": "weightedEventSort",
+        "id": "weightedEventSort",
         "params": {
           "queryNow": queryNow,
           "now": now,
