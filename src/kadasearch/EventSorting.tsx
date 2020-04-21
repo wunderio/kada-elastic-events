@@ -10,7 +10,6 @@ export const createEventSortQuery = (datefilter:moment.Moment = moment()) => {
   return {
     "_script": {
       "script": {
-        "lang": "painless",
         "id": "weightedEventSort",
         "params": {
           "queryNow": queryNow,
