@@ -54,7 +54,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-webpack": "^1.7.0",
     "moment": "^2.17.1",
-    "node-sass": "^3.3.3",
+    "node-sass": "^4.13.1",
     "null-loader": "^0.1.1",
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
